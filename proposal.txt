@@ -1,0 +1,7 @@
+Title: tagline of your project, such as "Slack: Where work happens"
+      Details:
+          - Team members (name and UNI for each teammate)
+          - Pain points you're addressing
+          - What your SaaS does to address the pain points
+          - Why is your SaaS unique/different from the solutions in the market
+          - A link to a short YouTube video explaining your proposal
