@@ -1,8 +1,8 @@
-Title: tagline of your project, such as "Slack: Where work happens"
+Title: NomNom,
       Details:
           Team Members:
             - Daniel Kim (dk3506)
-            - 
+            - Rebecca Zhao (rz2763)
             -
             - 
             
