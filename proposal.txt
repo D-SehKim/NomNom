@@ -3,7 +3,7 @@ Title: NomNom: Eat smart. Waste less. NomNom more.
           Team Members:
             - Daniel Kim (dk3506)
             - Rebecca Zhao (rz2763)
-            -
+            - Minsuk Kim (mk4434)
             - Yang-Jung (Eric) Chen (yc4670)
             
       
