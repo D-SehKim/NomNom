@@ -4,7 +4,7 @@ Title: NomNom: Eat smart. Waste less. NomNom more.
             - Daniel Kim (dk3506)
             - Rebecca Zhao (rz2763)
             -
-            - 
+            - Yang-Jung (Eric) Chen (yc4670)
             
       
           - Pain points you're addressing:
@@ -22,6 +22,11 @@ Title: NomNom: Eat smart. Waste less. NomNom more.
           - What your SaaS does to address the pain points
             -
           - Why is your SaaS unique/different from the solutions in the market
-            -
+            - NomNom stands out by combining food tracking, health management, and sustainability in one platform. 
+            While existing apps mainly focus on expiration reminders or grocery lists, NomNom offers a smarter, all-in-one experience. 
+            It not only tracks items and alerts users before they expire but also provides personalized recipe suggestions, 
+            meal and calorie tracking, and waste analytics to help users eat healthier and reduce food waste. 
+            As a cloud-based SaaS, NomNom syncs across devices, allowing families or roommates to manage shared inventories seamlessly. 
+            By combining convenience, health, and sustainability, NomNom delivers a holistic solution that no single competitor currently offers.
           - A link to a short YouTube video explaining your proposal
             - https://youtu.be/crT8mBtl_yg
