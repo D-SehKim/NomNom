@@ -1,4 +1,4 @@
-Title: NomNom,
+Title: NomNom: Eat smart. Waste less. NomNom more.
       Details:
           Team Members:
             - Daniel Kim (dk3506)
