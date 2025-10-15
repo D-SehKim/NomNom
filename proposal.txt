@@ -8,7 +8,17 @@ Title: NomNom,
             
       
           - Pain points you're addressing:
-            - 
+            - For our app, we aim to address three main pain points. The first is keeping track of food expiration dates. 
+            Many people forget when they purchased certain items or when those items will expire, which often leads to 
+            unnecessary food waste as forgotten items spoil in the fridge. The second pain point is managing what you 
+            already have at home. It’s common for people to go grocery shopping and forget what they still have, leading 
+            to duplicate purchases or missing key ingredients they intended to buy. This not only results in more food 
+            waste but also wasted time when people have to make additional trips to the store. Finally, the third pain 
+            point is dealing with leftovers or partial ingredients. People often find themselves with leftover items 
+            they don’t know how to use. They may need to buy more ingredients just to make a meal, or spend extra time 
+            searching for recipes that fit what they have. This inconvenience can make takeout seem like the easier option, 
+            leading to more food waste and expense.
+
           - What your SaaS does to address the pain points
             -
           - Why is your SaaS unique/different from the solutions in the market
