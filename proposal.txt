@@ -24,4 +24,4 @@ Title: NomNom,
           - Why is your SaaS unique/different from the solutions in the market
             -
           - A link to a short YouTube video explaining your proposal
-            -
+            - https://youtu.be/crT8mBtl_yg
