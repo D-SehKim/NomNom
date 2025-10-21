@@ -1,6 +1,6 @@
 # Minimal Sinatra Web App
 
-This is a minimal Ruby web application using Sinatra.
+This is a minimal Ruby web application using Sinatra.  Update as you go (please make your changes in your branch, and create PRs! Ask someone else to look over your changes, don't commit to main!)
 
 # Prerequisites
 
