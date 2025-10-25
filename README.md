@@ -2,6 +2,11 @@
 
 This is a minimal Ruby web application using Sinatra.
 
+# Team
+
+Our team consists of:
+Daniel Kim (dk3506)
+
 # Prerequisites
 
 Ruby installed via rbenv
