@@ -1,10 +1,17 @@
-# Minimal Sinatra Web App
+# Rails Web App
 
 This is a minimal Ruby web application using Sinatra.  Update as you go (please make your changes in your branch, and create PRs! Ask someone else to look over your changes, don't commit to main!)
 
 # Prerequisites
 
 Ruby installed via rbenv
+
+Make sure you also have PostgreSQL installed.  
+(Start it too, 
+```bash
+brew services start postgresql
+```
+on mac) 
 
 Bundler gem (gem install bundler)
 
@@ -38,13 +45,16 @@ rbenv rehash
 # Install dependencies:
 
 ```console
+gem install rails
 bundle install
+rails db:migrate
+
 ```
 
 # Run the App
 
 ```console
-ruby app.rb
+rails server
 ```
 
 The server will start on local, look in your console to see the port/address.  
