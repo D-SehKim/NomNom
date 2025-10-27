@@ -43,7 +43,6 @@ rbenv rehash
 ```console
 gem install rails
 bundle install
-rails db:create
 rails db:migrate
 
 ```
