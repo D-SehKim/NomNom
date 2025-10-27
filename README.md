@@ -7,6 +7,7 @@ This is a minimal Ruby web application using Sinatra.  Update as you go (please 
 Ruby installed via rbenv
 
 Make sure you also have PostgreSQL installed.  
+(Start it too, brew services start postgresql on mac) 
 
 Bundler gem (gem install bundler)
 
