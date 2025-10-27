@@ -6,6 +6,8 @@ This is a minimal Ruby web application using Sinatra.  Update as you go (please 
 
 Ruby installed via rbenv
 
+Make sure you also have PostgreSQL installed.  
+
 Bundler gem (gem install bundler)
 
 # Setup
@@ -40,6 +42,9 @@ rbenv rehash
 ```console
 gem install rails
 bundle install
+rails db:create
+rails db:migrate
+
 ```
 
 # Run the App
