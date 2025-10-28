@@ -59,6 +59,11 @@
                 <span class="status-badge status-fresh">✅ <%= days_until_expiry %> days left</span>
               <% end %>
             </td>
+            <td>
+              <%= link_to "Delete", item_path(item),
+                      data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this item?" },
+                      class: "btn btn-danger" %>
+            </td>
           </tr>
         <% end %>
       </tbody>
