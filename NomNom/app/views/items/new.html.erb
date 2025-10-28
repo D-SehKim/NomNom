@@ -1,0 +1,20 @@
+<h1>Add New Item</h1>
+
+<%= form_with model: @item, local: true do |f| %>
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :expires_at %><br>
+    <%= f.date_field :expires_at %>
+    <small>(leave blank if item does not expire)</small>
+  </div>
+
+  <div>
+    <%= f.submit "Add Item" %>
+  </div>
+<% end %>
+
+<p><%= link_to "Back to Items List", items_path %></p>
