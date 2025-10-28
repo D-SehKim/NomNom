@@ -1,0 +1,28 @@
+<h1>Recipe Search</h1>
+
+<p>
+  <%= link_to "Home", root_path, class: "btn btn-light" %>
+</p>
+
+<%= form_with url: recipes_path, method: :get, local: true do %>
+  <div>
+    <%= label_tag :ingredient, "Search by ingredient:" %>
+    <%= text_field_tag :ingredient, params[:ingredient] %>
+    <%= submit_tag "Search" %>
+  </div>
+<% end %>
+
+<% if @meals.present? %>
+  <h2>Results:</h2>
+  <ul>
+    <% @meals.each do |meal| %>
+      <li>
+        <strong><%= meal["strMeal"] %></strong><br>
+        <img src="<%= meal["strMealThumb"] %>" width="150" alt="<%= meal["strMeal"] %>"><br>
+        <%= link_to "View Details", recipe_path(meal["idMeal"]), class: "btn btn-secondary" %>
+      </li>
+    <% end %>
+  </ul>
+<% elsif params[:ingredient].present? %>
+  <p>No results found for "<%= params[:ingredient] %>".</p>
+<% end %>

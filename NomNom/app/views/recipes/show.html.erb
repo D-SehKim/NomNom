@@ -1,0 +1,29 @@
+<h1><%= @meal["strMeal"] %></h1>
+
+<p><strong>Category:</strong> <%= @meal["strCategory"] %></p>
+<p><strong>Area:</strong> <%= @meal["strArea"] %></p>
+
+<img src="<%= @meal["strMealThumb"] %>" width="300" alt="<%= @meal["strMeal"] %>">
+
+<h3>Instructions</h3>
+<p><%= simple_format(@meal["strInstructions"]) %></p>
+
+<h3>Ingredients</h3>
+<ul>
+  <% (1..20).each do |i| %>
+    <% ingredient = @meal["strIngredient#{i}"] %>
+    <% measure = @meal["strMeasure#{i}"] %>
+    <% if ingredient.present? && ingredient.strip != "" %>
+      <li><%= "#{ingredient} - #{measure}" %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<% if @meal["strYoutube"].present? %>
+  <h3>Video Tutorial</h3>
+  <iframe width="420" height="315"
+          src="https://www.youtube.com/embed/<%= @meal["strYoutube"].split('=').last %>">
+  </iframe>
+<% end %>
+
+<p><%= link_to "← Back to search", recipes_path, class: "btn btn-light" %></p>
