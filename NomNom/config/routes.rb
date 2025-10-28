@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :items, only: [:index, :new, :create]
   get "recipes", to: "recipes#index"
   get "recipes/:id", to: "recipes#show", as: "recipe"
   devise_for :users
