@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       patch :toggle_purchased
     end
   end
-  resources :items, only: [:index, :new, :create]
+  resources :items, only: [:index, :new, :create, :destroy]
   get "recipes", to: "recipes#index"
   get "recipes/:id", to: "recipes#show", as: "recipe"
   devise_for :users
