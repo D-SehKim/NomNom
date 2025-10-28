@@ -1,0 +1,114 @@
+<% content_for :title, "My Grocery List - NomNom" %>
+
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1 style="margin: 0;">🛒 My Grocery List</h1>
+    <%= link_to "➕ Add Item", new_grocery_item_path, class: "btn btn-primary" %>
+  </div>
+
+  <% if @grocery_items.any? %>
+    
+    <!-- To Buy Section -->
+    <div style="background: linear-gradient(135deg, rgba(255,230,109,0.2) 0%, rgba(255,230,109,0.05) 100%); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
+      <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+        📝 To Buy 
+        <span style="background: var(--accent); color: var(--text-dark); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 1rem; font-weight: 700;">
+          <%= @not_purchased.count %>
+        </span>
+      </h2>
+      
+      <% if @not_purchased.any? %>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Notes</th>
+              <th style="text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @not_purchased.each do |item| %>
+              <tr>
+                <td><strong style="font-size: 1.1rem;"><%= item.name %></strong></td>
+                <td>
+                  <span style="background: var(--success); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-weight: 600;">
+                    <%= item.quantity %>
+                  </span>
+                </td>
+                <td><%= item.notes.present? ? item.notes : "-" %></td>
+                <td style="text-align: center;">
+                  <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                    <%= button_to "✓ Purchased", toggle_purchased_grocery_item_path(item), method: :patch, class: "btn btn-sm btn-success" %>
+                    <%= link_to "✏️ Edit", edit_grocery_item_path(item), class: "btn btn-sm btn-secondary" %>
+                    <%= button_to "🗑️ Delete", grocery_item_path(item), method: :delete, data: { confirm: "Remove this item?" }, class: "btn btn-sm btn-danger" %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="empty-state">
+          <div class="empty-state-icon">🎉</div>
+          <p>All items purchased! Time to add more to your list.</p>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Purchased Section -->
+    <div style="background: linear-gradient(135deg, rgba(149,225,211,0.2) 0%, rgba(149,225,211,0.05) 100%); padding: 1.5rem; border-radius: var(--radius-md);">
+      <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+        ✅ Purchased 
+        <span style="background: var(--success); color: var(--text-dark); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 1rem; font-weight: 700;">
+          <%= @purchased.count %>
+        </span>
+      </h2>
+      
+      <% if @purchased.any? %>
+        <table style="opacity: 0.7;">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Notes</th>
+              <th style="text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @purchased.each do |item| %>
+              <tr class="purchased-row">
+                <td><%= item.name %></td>
+                <td><%= item.quantity %></td>
+                <td><%= item.notes.present? ? item.notes : "-" %></td>
+                <td style="text-align: center;">
+                  <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                    <%= button_to "↩️ Undo", toggle_purchased_grocery_item_path(item), method: :patch, class: "btn btn-sm btn-warning" %>
+                    <%= button_to "🗑️ Delete", grocery_item_path(item), method: :delete, data: { confirm: "Remove this item?" }, class: "btn btn-sm btn-danger" %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="empty-state">
+          <div class="empty-state-icon">🛒</div>
+          <p>No purchased items yet. Start shopping!</p>
+        </div>
+      <% end %>
+    </div>
+
+  <% else %>
+    <div class="empty-state" style="padding: 4rem 2rem;">
+      <div class="empty-state-icon">🛒</div>
+      <h2 style="color: var(--text-muted);">Your grocery list is empty</h2>
+      <p style="font-size: 1.1rem; margin: 1rem 0 2rem 0;">Start by adding items you need to buy!</p>
+      <%= link_to "➕ Add Your First Item", new_grocery_item_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;">
+  <%= link_to "← Back to Home", root_path, class: "btn btn-secondary" %>
+</div>
