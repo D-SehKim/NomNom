@@ -1,0 +1,36 @@
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+  <h1>Add New Grocery Item</h1>
+
+  <%= form_with model: @grocery_item, local: true do |f| %>
+    <% if @grocery_item.errors.any? %>
+      <div style="color: red; background-color: #ffebee; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+        <h3><%= pluralize(@grocery_item.errors.count, "error") %> prohibited this item from being saved:</h3>
+        <ul>
+          <% @grocery_item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :name, "Item Name*" %><br>
+      <%= f.text_field :name, placeholder: "e.g., Milk, Bread, Apples", required: true, style: "width: 100%; padding: 8px;" %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :quantity, "Quantity*" %><br>
+      <%= f.text_field :quantity, placeholder: "e.g., 2, 1kg, 500g", required: true, style: "width: 100%; padding: 8px;" %>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      <%= f.label :notes, "Notes (optional)" %><br>
+      <%= f.text_area :notes, placeholder: "Any additional notes...", rows: 3, style: "width: 100%; padding: 8px;" %>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <%= f.submit "Add to Grocery List", style: "background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;" %>
+      <%= link_to "Cancel", grocery_items_path, style: "margin-left: 10px; text-decoration: none; color: #666;" %>
+    </div>
+  <% end %>
+</div>

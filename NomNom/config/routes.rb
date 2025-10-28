@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :grocery_items do
+    member do
+      patch :toggle_purchased
+    end
+  end
   resources :items, only: [:index, :new, :create]
   get "recipes", to: "recipes#index"
   get "recipes/:id", to: "recipes#show", as: "recipe"

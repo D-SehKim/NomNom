@@ -1,0 +1,94 @@
+<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+  <h1>🛒 My Grocery List</h1>
+
+  <p><%= link_to "➕ Add New Item", new_grocery_item_path, class: "btn-primary" %></p>
+
+  <% if @grocery_items.any? %>
+    
+    <h2>📝 To Buy (<%= @not_purchased.count %>)</h2>
+    <% if @not_purchased.any? %>
+      <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; margin-bottom: 30px;">
+        <thead style="background-color: #f0f0f0;">
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @not_purchased.each do |item| %>
+            <tr>
+              <td><strong><%= item.name %></strong></td>
+              <td><%= item.quantity %></td>
+              <td><%= item.notes.present? ? item.notes : "-" %></td>
+              <td>
+                <%= button_to "✓ Mark Purchased", toggle_purchased_grocery_item_path(item), method: :patch, style: "display: inline;" %>
+                <%= link_to "Edit", edit_grocery_item_path(item) %>
+                <%= button_to "Delete", grocery_item_path(item), method: :delete, data: { confirm: "Are you sure?" }, style: "display: inline;" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p style="color: gray;">No items to buy yet.</p>
+    <% end %>
+
+    <h2>✅ Purchased (<%= @purchased.count %>)</h2>
+    <% if @purchased.any? %>
+      <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; opacity: 0.6;">
+        <thead style="background-color: #e8f5e9;">
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @purchased.each do |item| %>
+            <tr style="text-decoration: line-through;">
+              <td><%= item.name %></td>
+              <td><%= item.quantity %></td>
+              <td><%= item.notes.present? ? item.notes : "-" %></td>
+              <td>
+                <%= button_to "↩ Undo", toggle_purchased_grocery_item_path(item), method: :patch, style: "display: inline;" %>
+                <%= button_to "Delete", grocery_item_path(item), method: :delete, data: { confirm: "Are you sure?" }, style: "display: inline;" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p style="color: gray;">No purchased items yet.</p>
+    <% end %>
+
+  <% else %>
+    <p style="color: gray; font-size: 18px;">Your grocery list is empty. Start by adding items!</p>
+  <% end %>
+
+  <br>
+  <p><%= link_to "← Back to Home", root_path %></p>
+</div>
+
+<style>
+  .btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background-color: #45a049;
+  }
+  button {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 2px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+  }
+</style>

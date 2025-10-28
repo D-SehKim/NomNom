@@ -1,15 +1,23 @@
-<h1>Welcome to My App</h1>
+<h1>Welcome to NomNom 🍽️</h1>
 
 <% if user_signed_in? %>
   <p>Hello, <%= current_user.email %>!</p>
-  <p>
-    <%= link_to "Search Recipes", recipes_path, class: "btn btn-primary" %>
-  </p>
-  <p>
-    <%= link_to "Go to Expiration Date Tracker", items_path, class: "btn btn-primary" %>
-  </p>
+  
+  <div style="margin: 20px 0;">
+    <p>
+      <%= link_to "🛒 My Grocery List", grocery_items_path, class: "btn btn-primary" %>
+    </p>
+    <p>
+      <%= link_to "📅 Expiration Date Tracker", items_path, class: "btn btn-primary" %>
+    </p>
+    <p>
+      <%= link_to "🔍 Search Recipes", recipes_path, class: "btn btn-primary" %>
+    </p>
+  </div>
+  
   <%= button_to "Logout", destroy_user_session_path, method: :delete %>
 <% else %>
+  <p>Manage your grocery shopping, track expiration dates, and find recipes!</p>
   <%= link_to "Sign Up", new_user_registration_path %> |
   <%= link_to "Login", new_user_session_path %>
 <% end %>
