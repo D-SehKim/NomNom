@@ -39,17 +39,17 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 ### Homepage
 
-![Homepage](public/screenshots/homepage.png)
+![Homepage](NomNom/public/screenshots/homepage.png)
 _Feature cards for quick access to all functionality_
 
 ### Grocery List
 
-![Grocery List](public/screenshots/grocery-list.png)
+![Grocery List](NomNom/public/screenshots/grocery-list.png)
 _Organize your shopping with separate views for items to buy and purchased items_
 
 ### Expiration Tracker
 
-![Expiration Tracker](public/screenshots/expiration-tracker.png)
+![Expiration Tracker](NomNom/public/screenshots/expiration-tracker.png)
 _Color-coded status system to track food freshness_
 
 > **Note:** Screenshots coming soon! Run the app locally to see the full UI.
