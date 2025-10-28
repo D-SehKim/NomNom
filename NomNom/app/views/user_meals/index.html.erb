@@ -1,0 +1,44 @@
+<h1>Calorie Tracker</h1>
+
+<% if notice %>
+  <p style="color: green;"><%= notice %></p>
+<% end %>
+
+<h2>Today's Meals</h2>
+
+<% if @user_meals.any? %>
+  <% @user_meals.each do |meal| %>
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+      <h3><%= meal.recipe.name %> (<%= meal.servings %> servings)</h3>
+
+      <% if meal.recipe.recipe_ingredients.any? %>
+        <ul>
+          <% meal.recipe.recipe_ingredients.each do |ri| %>
+            <li>
+              <%= ri.ingredient.name %> - <%= ri.calories %> cal
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <% if meal.user_meal_ingredients.any? %>
+        <strong>Extra Ingredients:</strong>
+        <ul>
+          <% meal.user_meal_ingredients.each do |umi| %>
+            <li>
+              <%= umi.ingredient.name %> - <%= umi.quantity * umi.ingredient.calories_per_unit %> cal
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <p><strong>Total for this meal:</strong> <%= meal.total_calories %> cal</p>
+    </div>
+  <% end %>
+
+  <h3>Total Calories Consumed: <%= @total_calories %> cal</h3>
+<% else %>
+  <p>No meals logged yet.</p>
+<% end %>
+
+<%= link_to "Add New Meal", new_user_meal_path, class: "btn btn-primary" %>

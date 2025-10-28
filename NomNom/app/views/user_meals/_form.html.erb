@@ -1,0 +1,21 @@
+<%= form_with(model: @user_meal, local: true) do |f| %>
+  <div>
+    <%= f.label :recipe_id %>
+    <%= f.collection_select :recipe_id, @recipes, :id, :name %>
+  </div>
+
+  <div>
+    <%= f.label :servings %>
+    <%= f.number_field :servings, value: 1 %>
+  </div>
+
+  <h3>Extra Ingredients</h3>
+  <%= f.fields_for :user_meal_ingredients do |umi_form| %>
+    <div>
+      <%= umi_form.collection_select :ingredient_id, @ingredients, :id, :name %>
+      <%= umi_form.number_field :quantity, value: 1 %>
+    </div>
+  <% end %>
+
+  <%= f.submit "Add Meal" %>
+<% end %>
