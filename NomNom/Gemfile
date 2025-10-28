@@ -69,4 +69,6 @@ group :test do
   
   # Add Cucumber for acceptance testing
   gem "cucumber-rails", require: false
+
+  gem 'simplecov', require: false
 end
