@@ -1,20 +1,56 @@
-<h1>Add New Item</h1>
+<% content_for :title, "Add Item to Track - NomNom" %>
 
-<%= form_with model: @item, local: true do |f| %>
-  <div>
-    <%= f.label :name %><br>
-    <%= f.text_field :name, required: true %>
-  </div>
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+  <h1 style="text-align: center; margin-bottom: 0.5rem;">📅 Track New Item</h1>
+  <p class="text-center text-muted" style="margin-bottom: 2rem;">Add a food item to track its expiration date</p>
 
-  <div>
-    <%= f.label :expires_at %><br>
-    <%= f.date_field :expires_at %>
-    <small>(leave blank if item does not expire)</small>
-  </div>
+  <%= form_with model: @item, local: true do |f| %>
+    <% if @item.errors.any? %>
+      <div class="alert alert-error">
+        <h3 style="margin-top: 0; font-size: 1.1rem;">
+          <%= pluralize(@item.errors.count, "error") %> prevented this item from being saved:
+        </h3>
+        <ul style="margin-left: 1.5rem;">
+          <% @item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <div>
-    <%= f.submit "Add Item" %>
-  </div>
-<% end %>
+    <div class="form-group">
+      <%= f.label :name, "🏷️ Item Name*" %>
+      <%= f.text_field :name, placeholder: "e.g., Milk, Yogurt, Lettuce 🥬", required: true, autofocus: true %>
+      <small class="text-muted">What food item are you tracking?</small>
+    </div>
 
-<p><%= link_to "Back to Items List", items_path %></p>
+    <div class="form-group">
+      <%= f.label :expires_at, "📅 Expiration Date*" %>
+      <%= f.date_field :expires_at, required: true, min: Date.today %>
+      <small class="text-muted">When does this item expire?</small>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <%= f.submit "Add Item", class: "btn btn-primary", style: "flex: 1;" %>
+      <%= link_to "Cancel", items_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+
+<div class="card" style="max-width: 600px; margin: 2rem auto; background: linear-gradient(135deg, rgba(255,230,109,0.2) 0%, rgba(255,230,109,0.05) 100%);">
+  <h3 style="margin-top: 0;">💡 Tips for reducing food waste:</h3>
+  <ul style="margin-left: 1.5rem; line-height: 1.8;">
+    <li>Check expiration dates regularly</li>
+    <li>Use older items first (FIFO method)</li>
+    <li>Store food properly to extend shelf life</li>
+    <li>Plan meals around what's expiring soon</li>
+  </ul>
+</div>
+
+<style>
+  small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+  }
+</style>

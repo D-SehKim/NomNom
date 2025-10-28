@@ -1,22 +1,113 @@
-<h1>All Items</h1>
+<% content_for :title, "Expiration Date Tracker - NomNom" %>
 
-<p><%= link_to "Add New Item", new_item_path %></p>
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1 style="margin: 0;">📅 Expiration Date Tracker</h1>
+    <%= link_to "➕ Add Item", new_item_path, class: "btn btn-primary" %>
+  </div>
 
-<table border="1" cellpadding="5" cellspacing="0">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Expiration Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @items.each do |item| %>
-      <tr>
-        <td><%= item.name %></td>
-        <td><%= item.expires_at.present? ? item.expires_at.strftime("%Y-%m-%d") : "-" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <p class="text-muted" style="margin-bottom: 2rem;">
+    Keep track of your food items and their expiration dates to reduce waste 🌱
+  </p>
 
-<p><%= link_to "Home", root_path %></p>
+  <% if @items.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>📦 Item Name</th>
+          <th>📅 Expiration Date</th>
+          <th>⏰ Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @items.each do |item| %>
+          <% 
+            days_until_expiry = item.expires_at.present? ? (item.expires_at.to_date - Date.today).to_i : nil
+            status_class = if days_until_expiry.nil?
+              "status-unknown"
+            elsif days_until_expiry < 0
+              "status-expired"
+            elsif days_until_expiry <= 3
+              "status-urgent"
+            elsif days_until_expiry <= 7
+              "status-warning"
+            else
+              "status-fresh"
+            end
+          %>
+          <tr>
+            <td><strong style="font-size: 1.1rem;"><%= item.name %></strong></td>
+            <td>
+              <% if item.expires_at.present? %>
+                <%= item.expires_at.strftime("%B %d, %Y") %>
+              <% else %>
+                <span class="text-muted">Not set</span>
+              <% end %>
+            </td>
+            <td>
+              <% if days_until_expiry.nil? %>
+                <span class="status-badge status-unknown">❓ Unknown</span>
+              <% elsif days_until_expiry < 0 %>
+                <span class="status-badge status-expired">❌ Expired</span>
+              <% elsif days_until_expiry == 0 %>
+                <span class="status-badge status-urgent">⚠️ Expires Today!</span>
+              <% elsif days_until_expiry <= 3 %>
+                <span class="status-badge status-urgent">🔴 <%= days_until_expiry %> days left</span>
+              <% elsif days_until_expiry <= 7 %>
+                <span class="status-badge status-warning">🟡 <%= days_until_expiry %> days left</span>
+              <% else %>
+                <span class="status-badge status-fresh">✅ <%= days_until_expiry %> days left</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty-state" style="padding: 4rem 2rem;">
+      <div class="empty-state-icon">📅</div>
+      <h2 style="color: var(--text-muted);">No items tracked yet</h2>
+      <p style="font-size: 1.1rem; margin: 1rem 0 2rem 0;">Start tracking food expiration dates to reduce waste!</p>
+      <%= link_to "➕ Add Your First Item", new_item_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;">
+  <%= link_to "← Back to Home", root_path, class: "btn btn-secondary" %>
+</div>
+
+<style>
+  .status-badge {
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-block;
+  }
+  
+  .status-fresh {
+    background: linear-gradient(135deg, #95E1D3 0%, #B0F0E4 100%);
+    color: #155724;
+  }
+  
+  .status-warning {
+    background: linear-gradient(135deg, #FFE66D 0%, #FFED8F 100%);
+    color: #856404;
+  }
+  
+  .status-urgent {
+    background: linear-gradient(135deg, #FFA07A 0%, #FFB89C 100%);
+    color: #721c24;
+  }
+  
+  .status-expired {
+    background: linear-gradient(135deg, #E63946 0%, #F05454 100%);
+    color: white;
+  }
+  
+  .status-unknown {
+    background: linear-gradient(135deg, #BDC3C7 0%, #D5DBDB 100%);
+    color: #2C3E50;
+  }
+</style>

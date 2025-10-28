@@ -1,29 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Nomnom" %></title>
+    <title><%= content_for(:title) || "NomNom - Eat Smart, Waste Less 🍎" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Nomnom">
+    <meta name="application-name" content="NomNom">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <% if user_signed_in? %>
+      <nav class="navbar">
+        <div class="navbar-container">
+          <a href="<%= root_path %>" class="navbar-brand">
+            🍽️ NomNom
+          </a>
+          <div class="navbar-menu">
+            <%= link_to "🛒 Grocery List", grocery_items_path, class: "navbar-link" %>
+            <%= link_to "📅 Expiration Tracker", items_path, class: "navbar-link" %>
+            <%= link_to "🔍 Recipe Search", recipes_path, class: "navbar-link" %>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-sm btn-danger" %>
+          </div>
+        </div>
+      </nav>
+    <% end %>
+
+    <div class="container">
+      <% if notice %>
+        <div class="alert alert-success">
+          ✓ <%= notice %>
+        </div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="alert alert-error">
+          ⚠ <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>
