@@ -2101,3 +2101,103 @@ Processing by HomeController#index as TURBO_STREAM
 Completed 200 OK in 10ms (Views: 4.5ms | ActiveRecord: 5.0ms (1 query, 0 cached) | GC: 0.0ms)
 
 
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6819789301757574135) /*application='Nomnom'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (4.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Nomnom'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (7.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='Nomnom'*/[0m
+Migrating to CreateRecipes (20251028004857)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[35m (68.2ms)[0m  [1m[35mCREATE TABLE "recipes" ("id" bigserial primary key, "name" character varying, "description" text, "total_calories" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Nomnom'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20251028004857') RETURNING "version" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (1.4ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+Migrating to CreateIngredients (20251028004913)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[35m (21.3ms)[0m  [1m[35mCREATE TABLE "ingredients" ("id" bigserial primary key, "name" character varying, "calories_per_unit" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='Nomnom'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20251028004913') RETURNING "version" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+Migrating to CreateRecipeIngredients (20251028004924)
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[35m (17.3ms)[0m  [1m[35mCREATE TABLE "recipe_ingredients" ("id" bigserial primary key, "recipe_id" bigint NOT NULL, "ingredient_id" bigint NOT NULL, "quantity" integer, "calories" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_176a228c1e"
+FOREIGN KEY ("recipe_id")
+  REFERENCES "recipes" ("id")
+, CONSTRAINT "fk_rails_209d9afca6"
+FOREIGN KEY ("ingredient_id")
+  REFERENCES "ingredients" ("id")
+) /*application='Nomnom'*/[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE INDEX "index_recipe_ingredients_on_recipe_id" ON "recipe_ingredients" ("recipe_id") /*application='Nomnom'*/[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_recipe_ingredients_on_ingredient_id" ON "recipe_ingredients" ("ingredient_id") /*application='Nomnom'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20251028004924') RETURNING "version" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (3.9ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(6819789301757574135) /*application='Nomnom'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Nomnom'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Nomnom'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='Nomnom'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='Nomnom'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='Nomnom'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (5.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Load (24.4ms)[0m  [1m[34mSELECT "recipe_ingredients".* FROM "recipe_ingredients" /*application='Nomnom'*/[0m
+  [1m[36mIngredient Load (0.7ms)[0m  [1m[34mSELECT "ingredients".* FROM "ingredients" /*application='Nomnom'*/[0m
+  [1m[36mRecipe Load (2.9ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (5.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mIngredient Create (25.3ms)[0m  [1m[32mINSERT INTO "ingredients" ("name", "calories_per_unit", "created_at", "updated_at") VALUES ('Flour', 50, '2025-10-28 00:53:21.368849', '2025-10-28 00:53:21.368849') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mIngredient Create (0.7ms)[0m  [1m[32mINSERT INTO "ingredients" ("name", "calories_per_unit", "created_at", "updated_at") VALUES ('Sugar', 16, '2025-10-28 00:53:21.397463', '2025-10-28 00:53:21.397463') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mIngredient Create (0.5ms)[0m  [1m[32mINSERT INTO "ingredients" ("name", "calories_per_unit", "created_at", "updated_at") VALUES ('Butter', 72, '2025-10-28 00:53:21.399159', '2025-10-28 00:53:21.399159') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mIngredient Create (0.6ms)[0m  [1m[32mINSERT INTO "ingredients" ("name", "calories_per_unit", "created_at", "updated_at") VALUES ('Egg', 70, '2025-10-28 00:53:21.400516', '2025-10-28 00:53:21.400516') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mIngredient Create (0.6ms)[0m  [1m[32mINSERT INTO "ingredients" ("name", "calories_per_unit", "created_at", "updated_at") VALUES ('Milk', 42, '2025-10-28 00:53:21.402029', '2025-10-28 00:53:21.402029') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mIngredient Create (0.6ms)[0m  [1m[32mINSERT INTO "ingredients" ("name", "calories_per_unit", "created_at", "updated_at") VALUES ('Chocolate', 55, '2025-10-28 00:53:21.403434', '2025-10-28 00:53:21.403434') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipe Create (1.8ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "description", "total_calories", "created_at", "updated_at") VALUES ('Pancakes', 'Fluffy breakfast pancakes', NULL, '2025-10-28 00:53:21.408702', '2025-10-28 00:53:21.408702') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipe Create (0.7ms)[0m  [1m[32mINSERT INTO "recipes" ("name", "description", "total_calories", "created_at", "updated_at") VALUES ('Chocolate Cake', 'Rich and moist cake', NULL, '2025-10-28 00:53:21.411834', '2025-10-28 00:53:21.411834') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (10.8ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (1, 1, 200, 1000, '2025-10-28 00:53:21.444911', '2025-10-28 00:53:21.444911') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (1.0ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (1, 5, 200, 84, '2025-10-28 00:53:21.457834', '2025-10-28 00:53:21.457834') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (2.1ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (1, 4, 2, 140, '2025-10-28 00:53:21.461362', '2025-10-28 00:53:21.461362') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (1.4ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (1, 3, 50, 360, '2025-10-28 00:53:21.468802', '2025-10-28 00:53:21.468802') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (1.6ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (1, 2, 30, 48, '2025-10-28 00:53:21.473585', '2025-10-28 00:53:21.473585') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (4.5ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (2, 1, 250, 1250, '2025-10-28 00:53:21.477639', '2025-10-28 00:53:21.477639') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (1.0ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (2, 2, 150, 240, '2025-10-28 00:53:21.483530', '2025-10-28 00:53:21.483530') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (0.8ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (2, 3, 100, 720, '2025-10-28 00:53:21.485721', '2025-10-28 00:53:21.485721') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (0.8ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (2, 4, 3, 210, '2025-10-28 00:53:21.487605', '2025-10-28 00:53:21.487605') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (1.4ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (2, 6, 200, 1100, '2025-10-28 00:53:21.489651', '2025-10-28 00:53:21.489651') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Create (1.0ms)[0m  [1m[32mINSERT INTO "recipe_ingredients" ("recipe_id", "ingredient_id", "quantity", "calories", "created_at", "updated_at") VALUES (2, 5, 150, 63, '2025-10-28 00:53:21.492401', '2025-10-28 00:53:21.492401') RETURNING "id" /*application='Nomnom'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT /*application='Nomnom'*/[0m
+  [1m[36mRecipe Count (9.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "recipes" /*application='Nomnom'*/[0m
+  [1m[36mIngredient Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "ingredients" /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "recipe_ingredients" /*application='Nomnom'*/[0m
+  [1m[36mRecipe Load (511.8ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes" /* loading for pp */ LIMIT 11 /*application='Nomnom'*/[0m
+  [1m[36mRecipe Load (3.8ms)[0m  [1m[34mSELECT "recipes".* FROM "recipes" ORDER BY "recipes"."id" ASC LIMIT 1 /*application='Nomnom'*/[0m
+  [1m[36mIngredient Load (2.7ms)[0m  [1m[34mSELECT "ingredients".* FROM "ingredients" INNER JOIN "recipe_ingredients" ON "ingredients"."id" = "recipe_ingredients"."ingredient_id" WHERE "recipe_ingredients"."recipe_id" = 1 /*application='Nomnom'*/[0m
+  [1m[36mRecipeIngredient Sum (12.5ms)[0m  [1m[34mSELECT SUM("recipe_ingredients"."calories") FROM "recipe_ingredients" WHERE "recipe_ingredients"."recipe_id" = 1 /*application='Nomnom'*/[0m
