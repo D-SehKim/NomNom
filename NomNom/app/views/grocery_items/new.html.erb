@@ -1,0 +1,52 @@
+<% content_for :title, "Add Grocery Item - NomNom" %>
+
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+  <h1 style="text-align: center; margin-bottom: 0.5rem;">➕ Add New Item</h1>
+  <p class="text-center text-muted" style="margin-bottom: 2rem;">What do you need to buy?</p>
+
+  <%= form_with model: @grocery_item, local: true do |f| %>
+    <% if @grocery_item.errors.any? %>
+      <div class="alert alert-error">
+        <h3 style="margin-top: 0; font-size: 1.1rem;">
+          <%= pluralize(@grocery_item.errors.count, "error") %> prevented this item from being saved:
+        </h3>
+        <ul style="margin-left: 1.5rem;">
+          <% @grocery_item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :name, "🏷️ Item Name*" %>
+      <%= f.text_field :name, placeholder: "e.g., Milk, Bread, Apples 🍎", required: true, autofocus: true %>
+      <small class="text-muted">What item do you need?</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :quantity, "📦 Quantity*" %>
+      <%= f.text_field :quantity, placeholder: "e.g., 2, 1kg, 500g, 6 pack", required: true %>
+      <small class="text-muted">How much do you need?</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :notes, "📝 Notes (optional)" %>
+      <%= f.text_area :notes, placeholder: "Any special requests or preferences...", rows: 3 %>
+      <small class="text-muted">Add any additional details</small>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <%= f.submit "Add to Grocery List", class: "btn btn-primary", style: "flex: 1;" %>
+      <%= link_to "Cancel", grocery_items_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+  }
+</style>

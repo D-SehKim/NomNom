@@ -1,18 +1,120 @@
-<h1>Welcome to My App</h1>
+<% content_for :title, "NomNom - Your Smart Food Manager 🍎" %>
+
+<div class="text-center" style="padding: 3rem 0 2rem 0;">
+  <h1 style="font-size: 3.5rem; margin-bottom: 0.5rem;">
+    Welcome to NomNom 🍽️
+  </h1>
+  <p style="font-size: 1.3rem; color: var(--text-muted);">
+    Eat smart. Waste less. NomNom more.
+  </p>
+</div>
 
 <% if user_signed_in? %>
-  <p>Hello, <%= current_user.email %>!</p>
-  <p>
-    <%= link_to "Search Recipes", recipes_path, class: "btn btn-primary" %>
-  </p>
-  <p>
-    <%= link_to "Go to Expiration Date Tracker", items_path, class: "btn btn-primary" %>
-  </p>
-  <p>
-    <%= link_to "Go to Calorie Tracker", user_meals_path, class: "btn btn-primary" %>
-  </p>
-  <%= button_to "Logout", destroy_user_session_path, method: :delete %>
+  <div class="card" style="background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(78,205,196,0.1) 100%); border: none;">
+    <p style="font-size: 1.2rem; text-align: center;">
+      👋 Hello, <strong><%= current_user.email %></strong>!
+    </p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🛒</div>
+      <h3 class="feature-title">Grocery List</h3>
+      <p class="feature-desc">
+        Plan your shopping trips and never forget what to buy
+      </p>
+      <%= link_to "View Grocery List", grocery_items_path, class: "btn btn-primary" %>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <h3 class="feature-title">Expiration Tracker</h3>
+      <p class="feature-desc">
+        Track food expiration dates and reduce waste
+      </p>
+      <%= link_to "Track Items", items_path, class: "btn btn-secondary" %>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3 class="feature-title">Recipe Search</h3>
+      <p class="feature-desc">
+        Discover recipes based on what you have at home
+      </p>
+      <%= link_to "Find Recipes", recipes_path, class: "btn btn-success" %>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3 class="feature-title">Calorie Tracker</h3>
+      <p class="feature-desc">
+        Track your daily calorie intake
+      </p>
+      <%= link_to "Track Calories", user_meals_path, class: "btn btn-success" %>
+    </div>
+  </div>
+
+  <div class="card" style="text-align: center; margin-top: 3rem;">
+    <h2 style="color: var(--text-dark); margin-top: 0;">
+      💡 Quick Tips
+    </h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+      <div>
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🥬</div>
+        <strong>Fresh is best</strong>
+        <p class="text-muted" style="font-size: 0.9rem;">Check expiration dates regularly</p>
+      </div>
+      <div>
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📝</div>
+        <strong>Plan ahead</strong>
+        <p class="text-muted" style="font-size: 0.9rem;">Make a list before shopping</p>
+      </div>
+      <div>
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">♻️</div>
+        <strong>Reduce waste</strong>
+        <p class="text-muted" style="font-size: 0.9rem;">Use what you already have</p>
+      </div>
+    </div>
+  </div>
+
 <% else %>
-  <%= link_to "Sign Up", new_user_registration_path %> |
-  <%= link_to "Login", new_user_session_path %>
+  <div class="card" style="text-align: center; padding: 3rem;">
+    <h2 style="color: var(--text-dark); margin-top: 0;">
+      🌟 Your Personal Food Management Assistant
+    </h2>
+    <p style="font-size: 1.2rem; color: var(--text-muted); margin: 1.5rem 0;">
+      Manage your grocery shopping, track expiration dates, and discover delicious recipes!
+    </p>
+    
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+      <%= link_to "Sign Up", new_user_registration_path, class: "btn btn-primary" %>
+      <%= link_to "Login", new_user_session_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 3rem;">
+    <div class="card">
+      <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🛒</div>
+      <h3 style="text-align: center;">Smart Shopping Lists</h3>
+      <p class="text-muted" style="text-align: center;">
+        Create and manage your grocery lists with ease. Never forget an item again!
+      </p>
+    </div>
+    
+    <div class="card">
+      <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">📅</div>
+      <h3 style="text-align: center;">Expiration Tracking</h3>
+      <p class="text-muted" style="text-align: center;">
+        Keep track of food expiration dates and reduce food waste significantly.
+      </p>
+    </div>
+    
+    <div class="card">
+      <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🍳</div>
+      <h3 style="text-align: center;">Recipe Discovery</h3>
+      <p class="text-muted" style="text-align: center;">
+        Find amazing recipes based on ingredients you already have at home.
+      </p>
+    </div>
+  </div>
 <% end %>
