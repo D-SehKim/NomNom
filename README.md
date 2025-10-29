@@ -194,5 +194,3 @@ This project is part of a Columbia University SaaS course assignment.
 ## Acknowledgments
 
 - Built with Ruby on Rails
-- UI inspired by modern food management apps
-- Color palette designed around fresh fruits and vegetables
