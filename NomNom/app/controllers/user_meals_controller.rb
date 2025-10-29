@@ -2,10 +2,10 @@ class UserMealsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # Fetch meals for current user (you can later filter by date)
+    # Fetch meals for the current user (can later filter by date)
     @user_meals = current_user.user_meals.includes(recipe: :recipe_ingredients, user_meal_ingredients: :ingredient)
 
-    # Compute total calories consumed
+    # Compute total calories consumed dynamically
     @total_calories = @user_meals.sum(&:total_calories)
   end
 
@@ -13,7 +13,7 @@ class UserMealsController < ApplicationController
     @user_meal = current_user.user_meals.new
     @recipes = Recipe.all
     @ingredients = Ingredient.all
-    @user_meal.user_meal_ingredients.build # for custom ingredients
+    @user_meal.user_meal_ingredients.build
   end
 
   def create
@@ -27,6 +27,24 @@ class UserMealsController < ApplicationController
       render :new
     end
   end
+
+  def clear_all
+    current_user.user_meals.destroy_all
+    redirect_to user_meals_path, notice: "All meals and custom ingredients have been cleared!"
+  end
+
+  def destroy_ingredient
+    umi = UserMealIngredient.find(params[:id])
+    umi.destroy
+    redirect_to user_meals_path, notice: "Ingredient removed."
+  end
+
+  def destroy
+    @user_meal = current_user.user_meals.find(params[:id])
+    @user_meal.destroy
+    redirect_to user_meals_path, notice: "Meal removed successfully!"
+  end
+
 
   private
 

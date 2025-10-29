@@ -2,24 +2,82 @@
 
 <%= form_with(model: @user_meal, local: true) do |f| %>
   <div>
-    <%= f.label :recipe_id, "Choose a Recipe" %>
-    <%= f.collection_select :recipe_id, @recipes, :id, :name, prompt: "Select a recipe" %>
+    <%= f.label :choice, "Would you like to use a recipe or add ingredients?" %><br>
+    <select id="meal-choice" onchange="toggleMealForm()">
+      <option value="">Select an option</option>
+      <option value="recipe">Use Recipe</option>
+      <option value="custom">Add Ingredients</option>
+    </select>
   </div>
 
-  <div>
-    <%= f.label :servings %>
-    <%= f.number_field :servings, value: 1 %>
-  </div>
-
-  <h3>Or Add Custom Ingredients</h3>
-  <%= f.fields_for :user_meal_ingredients do |umi_form| %>
+  <!-- Recipe Section -->
+  <div id="recipe-section" style="display: none; margin-top: 15px;">
+    <h3>Choose a Recipe</h3>
     <div style="margin-bottom: 10px;">
-      <%= umi_form.collection_select :ingredient_id, @ingredients, :id, :name, prompt: "Select an ingredient" %>
-      <%= umi_form.number_field :quantity, placeholder: "Quantity" %>
+      <%= f.collection_select :recipe_id, @recipes, :id, :name, prompt: "Select a recipe" %>
+      <%= f.number_field :servings, value: 1, min: 1, style: "margin-left: 10px;" %>
     </div>
-  <% end %>
+  </div>
 
-  <%= f.submit "Save Meal" %>
+  <!-- Custom Ingredients Section -->
+  <div id="ingredients-section" style="display: none; margin-top: 15px;">
+    <h3>Add Custom Ingredients</h3>
+
+    <div id="custom-ingredients-container">
+      <%= f.fields_for :user_meal_ingredients do |umi_form| %>
+        <div class="ingredient-row" style="margin-bottom: 10px;">
+          <%= umi_form.collection_select :ingredient_id, @ingredients, :id, :name, prompt: "Select an ingredient" %>
+          <%= umi_form.number_field :quantity, placeholder: "Quantity", min: 1, style: "width: 70px; margin-left: 5px;" %>
+          <button type="button" onclick="removeIngredient(this)">Remove</button>
+        </div>
+      <% end %>
+    </div>
+
+    <button type="button" onclick="addCustomIngredient()">Add Another Ingredient</button>
+  </div>
+
+  <%= f.submit "Save Meal", style: "margin-top: 15px;" %>
 <% end %>
 
 <%= link_to "Back to Meals", user_meals_path %>
+
+<script>
+  function toggleMealForm() {
+    const choice = document.getElementById('meal-choice').value;
+    const recipeSection = document.getElementById('recipe-section');
+    const ingredientsSection = document.getElementById('ingredients-section');
+
+    if (choice === 'recipe') {
+      recipeSection.style.display = 'block';
+      ingredientsSection.style.display = 'none';
+    } else if (choice === 'custom') {
+      ingredientsSection.style.display = 'block';
+      recipeSection.style.display = 'none';
+    } else {
+      recipeSection.style.display = 'none';
+      ingredientsSection.style.display = 'none';
+    }
+  }
+
+  function addCustomIngredient() {
+    const container = document.getElementById('custom-ingredients-container');
+    const index = container.children.length;
+    const html = `
+      <div class="ingredient-row" style="margin-bottom: 10px;">
+        <select name="user_meal[user_meal_ingredients_attributes][${index}][ingredient_id]">
+          <option value="">Select an ingredient</option>
+          <% @ingredients.each do |ingredient| %>
+            <option value="<%= ingredient.id %>"><%= ingredient.name %></option>
+          <% end %>
+        </select>
+        <input type="number" name="user_meal[user_meal_ingredients_attributes][${index}][quantity]" placeholder="Quantity" min="1" style="width: 70px; margin-left: 5px;">
+        <button type="button" onclick="removeIngredient(this)">Remove</button>
+      </div>
+    `;
+    container.insertAdjacentHTML('beforeend', html);
+  }
+
+  function removeIngredient(button) {
+    button.parentElement.remove();
+  }
+</script>

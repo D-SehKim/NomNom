@@ -3,7 +3,16 @@ Rails.application.routes.draw do
   get "recipes", to: "recipes#index"
   get "recipes/:id", to: "recipes#show", as: "recipe"
   devise_for :users
-  resources :user_meals, only: [:index, :new, :create, :destroy]
+  # resources :user_meals, only: [:index, :new, :create, :destroy]
+
+  resources :user_meals, only: [:index, :new, :create, :destroy] do
+    collection do
+      delete :clear_all
+    end
+
+    delete :clear_all, on: :collection
+    resources :user_meal_ingredients, only: [:destroy]
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
