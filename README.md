@@ -10,7 +10,7 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 - **Daniel Kim** - (dk3506)
 - **Minsuk Kim** - ()
-- **Rebecca Zhao** - ()
+- **Rebecca Zhao** - (rz2763)
 - **Eric Chen** - ()
 
 ---
@@ -78,7 +78,7 @@ _Color-coded status system to track food freshness_
 
 ## Prerequisites
 
-- Ruby 3.3.8 (via rbenv)
+- Ruby 3.4.2 (via rbenv)
 - PostgreSQL
 - Bundler gem
 
@@ -109,11 +109,11 @@ git clone https://github.com/D-SehKim/SaaS_Project.git
 cd SaaS_Project/NomNom
 ```
 
-### 2. Install Ruby 3.3.8
+### 2. Install Ruby 3.4.2
 
 ```bash
-rbenv install 3.3.8
-rbenv local 3.3.8
+rbenv install 3.4.2
+rbenv local 3.4.2
 ```
 
 ### 3. Install dependencies
