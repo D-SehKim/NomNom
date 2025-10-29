@@ -6,6 +6,15 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 ---
 
+## Team
+
+- **Daniel Kim** - (dk3506)
+- **Minsuk Kim** - ()
+- **Rebecca Zhao** - ()
+- **Eric Chen** - ()
+
+---
+
 ## Features
 
 ### Grocery List
@@ -163,17 +172,6 @@ bundle exec rubocop
 # Run Brakeman security scan
 bundle exec brakeman
 ```
-
----
-
-## Team
-
-### Sprint 1 (Current)
-
-- **Daniel Kim** - Expiration Date Tracker, Recipe Search
-- **Minsuk Kim** - Grocery List, UI/UX Design
-- **Rebecca Zhao** - Calorie Tracking
-- **Eric Chen** - Authentication Testing
 
 ---
 
