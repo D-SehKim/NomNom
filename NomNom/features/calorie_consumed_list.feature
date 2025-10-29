@@ -4,40 +4,18 @@ Feature: Display list of all recipes and ingredients user has consumed
   So that I can quickly browse through everything I have eaten
   I want to see what meals, ingredients, and quantity of each that I have consumed
 
-Background: movies have been added to database
+Scenario: Display list of all recipes
+  Given I am logged in as a user
+  And I have a meal with the recipe "Pancakes"
+  And I have a meal with the recipe "Chocolate Cake"
+  When I visit the calorie tracker page
+  Then I should see "Pancakes" listed
+  And I should see "Chocolate Cake" listed
 
-  Given the following movies exist:
-  | title                   | rating | release_date |
-  | Aladdin                 | G      | 25-Nov-1992  |
-  | The Terminator          | R      | 26-Oct-1984  |
-  | When Harry Met Sally    | R      | 21-Jul-1989  |
-  | The Help                | PG-13  | 10-Aug-2011  |
-  | Chocolat                | PG-13  | 5-Jan-2001   |
-  | Amelie                  | R      | 25-Apr-2001  |
-  | 2001: A Space Odyssey   | G      | 6-Apr-1968   |
-  | The Incredibles         | PG     | 5-Nov-2004   |
-  | Raiders of the Lost Ark | PG     | 12-Jun-1981  |
-  | Chicken Run             | G      | 21-Jun-2000  |
-
-  And I am on the RottenPotatoes home page
-  Then 10 seed movies should exist
-
-Scenario: restrict to movies with "PG" or "R" ratings
-  When I check the following ratings: PG, R
-  # enter step(s) to check the "PG" and "R" checkboxes
-  # enter step(s) to uncheck all other checkboxes
-  # enter step to "submit" the search form on the homepage
-  # enter step(s) to ensure that PG and R movies are visible
-  # enter step(s) to ensure that other movies are not visible
-  And I uncheck the following ratings: G, PG-13
-  And I press "Refresh"
-  Then I should see the following movies: The Terminator, When Harry Met Sally, Amelie, The Incredibles, Raiders of the Lost Ark
-  And I should not see the following movies: Aladdin, The Help, Chocolat, 2001: A Space Odyssey, Chicken Run
-
-
-Scenario: all ratings selected
-  # your steps here
-  # Then complete the rest of of this scenario
-  When I check the following ratings: G, PG, PG-13, R
-  And I press "Refresh"
-  Then I should see all the movies
+Scenario: Display list of all custom ingredients
+  Given I am logged in as a user
+  And I have a custom ingredient "Sugar"
+  And I have a custom ingredient "Salt"
+  When I visit the calorie tracker page
+  Then I should see "Sugar" listed
+  And I should see "Salt" listed
