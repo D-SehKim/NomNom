@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   get "recipes", to: "recipes#index"
   get "recipes/:id", to: "recipes#show", as: "recipe"
   devise_for :users
-  # resources :user_meals, only: [:index, :new, :create, :destroy]
 
   resources :user_meals, only: [:index, :new, :create, :destroy] do
     collection do

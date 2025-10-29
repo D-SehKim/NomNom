@@ -1,5 +1,0 @@
-<div class="user-meal-ingredient">
-  <%= f.collection_select :ingredient_id, ingredients, :id, :name, prompt: "Select ingredient" %>
-  <%= f.number_field :quantity, min: 1, step: 0.1, placeholder: "Quantity" %>
-  <button type="button" class="remove-ingredient">Remove</button>
-</div>

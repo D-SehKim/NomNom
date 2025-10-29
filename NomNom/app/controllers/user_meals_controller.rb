@@ -2,10 +2,7 @@ class UserMealsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # Fetch meals for the current user (can later filter by date)
     @user_meals = current_user.user_meals.includes(recipe: :recipe_ingredients, user_meal_ingredients: :ingredient)
-
-    # Compute total calories consumed dynamically
     @total_calories = @user_meals.sum(&:total_calories)
   end
 
