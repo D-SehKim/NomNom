@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       delete :clear_all
     end
 
-    delete :clear_all, on: :collection
+    # delete :clear_all, on: :collection
     resources :user_meal_ingredients, only: [:destroy]
   end
 
