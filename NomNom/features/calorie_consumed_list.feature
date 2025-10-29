@@ -1,8 +1,8 @@
-Feature: how many calories user has eaten in the day
+Feature: Display list of all recipes and ingredients user has consumed
 
-  As a concerned parent
-  So that I can quickly browse movies appropriate for my family
-  I want to see movies matching only certain MPAA ratings
+  As a health focused user
+  So that I can quickly browse through everything I have eaten
+  I want to see what meals, ingredients, and quantity of each that I have consumed
 
 Background: movies have been added to database
 
