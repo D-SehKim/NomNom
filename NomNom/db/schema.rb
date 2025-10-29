@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_10_28_032156) do
+ActiveRecord::Schema[8.1].define(version: 2025_10_28_223108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -41,7 +41,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_28_032156) do
   end
 
   create_table "recipe_ingredients", force: :cascade do |t|
-    t.integer "calories"
     t.datetime "created_at", null: false
     t.bigint "ingredient_id", null: false
     t.integer "quantity"
@@ -59,6 +58,26 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_28_032156) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_meal_ingredients", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "ingredient_id", null: false
+    t.integer "quantity"
+    t.datetime "updated_at", null: false
+    t.bigint "user_meal_id", null: false
+    t.index ["ingredient_id"], name: "index_user_meal_ingredients_on_ingredient_id"
+    t.index ["user_meal_id"], name: "index_user_meal_ingredients_on_user_meal_id"
+  end
+
+  create_table "user_meals", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "recipe_id"
+    t.integer "servings"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["recipe_id"], name: "index_user_meals_on_recipe_id"
+    t.index ["user_id"], name: "index_user_meals_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -74,4 +93,8 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_28_032156) do
   add_foreign_key "grocery_items", "users"
   add_foreign_key "recipe_ingredients", "ingredients"
   add_foreign_key "recipe_ingredients", "recipes"
+  add_foreign_key "user_meal_ingredients", "ingredients"
+  add_foreign_key "user_meal_ingredients", "user_meals"
+  add_foreign_key "user_meals", "recipes"
+  add_foreign_key "user_meals", "users"
 end

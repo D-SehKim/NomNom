@@ -1,0 +1,62 @@
+<h1>Calorie Tracker</h1>
+
+<% if notice %>
+  <p style="color: green;"><%= notice %></p>
+<% end %>
+
+<h2>Today's Meals</h2>
+
+<% if @user_meals.any? %>
+  <!-- Recipes Section -->
+  <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; background: #f9f9f9;">
+    <h3>Recipes</h3>
+    <% @user_meals.each do |meal| %>
+      <% if meal.recipe.present? && meal.recipe.recipe_ingredients.any? %>
+        <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 10px; border-radius: 5px; background: #fff; display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <h4><%= meal.recipe.name %> (<%= meal.servings %> serving<%= 's' if meal.servings != 1 %>)</h4>
+            <ul>
+              <% meal.recipe.recipe_ingredients.each do |ri| %>
+                <li>
+                  <%= ri.ingredient.name %> — <%= ri.quantity %> × <%= ri.ingredient.calories_per_unit %> cal = <%= ri.quantity * ri.ingredient.calories_per_unit %> cal
+                </li>
+              <% end %>
+            </ul>
+            <p><strong>Total for this recipe:</strong> <%= meal.total_calories %> cal</p>
+          </div>
+          <div>
+            <%= button_to "Remove", user_meal_path(meal), method: :delete, data: { confirm: "Remove this recipe?" }, class: "btn btn-sm btn-danger" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Custom Ingredients Section -->
+  <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; background: #f9f9f9;">
+    <h3>Custom Ingredients</h3>
+    <% total_custom_calories = 0 %>
+    <% @user_meals.each do |meal| %>
+      <% meal.user_meal_ingredients.each do |umi| %>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+          <span>
+            <%= umi.ingredient.name %> — <%= umi.quantity %> × <%= umi.ingredient.calories_per_unit %> cal = <%= umi.quantity * umi.ingredient.calories_per_unit %> cal
+          </span>
+          <%= button_to "Remove", user_meal_user_meal_ingredient_path(meal, umi), method: :delete, data: { confirm: "Remove this ingredient?" }, class: "btn btn-sm btn-danger" %>
+        </div>
+        <% total_custom_calories += umi.quantity * umi.ingredient.calories_per_unit %>
+      <% end %>
+    <% end %>
+    <p><strong>Total Calories for All Custom Ingredients:</strong> <%= total_custom_calories %> cal</p>
+  </div>
+
+  <h3>Total Calories Consumed: <%= @total_calories %> cal</h3>
+<% else %>
+  <p>No meals logged yet.</p>
+<% end %>
+
+<div style="display: flex; gap: 10px; margin-top: 20px;">
+  <%= button_to "Add New Meal", new_user_meal_path, method: :get, class: "btn btn-primary" %>
+  <%= button_to "Clear All Meals", clear_all_user_meals_path, method: :delete, data: { confirm: "Are you sure you want to delete all meals?" }, class: "btn btn-danger" %>
+  <%= link_to "Back to Home", root_path, class: "btn btn-secondary" %>
+</div>
