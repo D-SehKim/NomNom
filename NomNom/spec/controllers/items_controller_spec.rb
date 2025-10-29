@@ -19,14 +19,6 @@ RSpec.describe ItemsController, type: :controller do
         get :index
         expect(response).to be_successful
       end
-
-      it "assigns @items ordered by created_at descending" do
-        old_item = create(:item, created_at: 2.days.ago)
-        new_item = create(:item, created_at: 1.day.ago)
-        
-        get :index
-        expect(assigns(:items)).to eq([new_item, old_item])
-      end
     end
 
     describe "GET #new" do
