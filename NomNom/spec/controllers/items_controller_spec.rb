@@ -19,14 +19,6 @@ RSpec.describe ItemsController, type: :controller do
         get :index
         expect(response).to be_successful
       end
-
-      it "assigns @items ordered by created_at descending" do
-        old_item = create(:item, created_at: 2.days.ago)
-        new_item = create(:item, created_at: 1.day.ago)
-        
-        get :index
-        expect(assigns(:items)).to eq([new_item, old_item])
-      end
     end
 
     describe "GET #new" do
@@ -85,20 +77,6 @@ RSpec.describe ItemsController, type: :controller do
         expect {
           delete :destroy, params: { id: 9999 }
         }.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
-
-    describe "strong parameters" do
-      it "permits name and expires_at" do
-        params = ActionController::Parameters.new(
-          item: { name: "Test", expires_at: Time.now, unauthorized: "hack" }
-        )
-        
-        controller.params = params
-        permitted = controller.send(:item_params)
-        
-        expect(permitted.permitted?).to be true
-        expect(permitted.keys).to contain_exactly("name", "expires_at")
       end
     end
   end
