@@ -180,7 +180,7 @@ Then(/^show me the page$/) do
 end
 
 # Background steps that may be called from other features
-Given(/^I am logged in as a user$/) do
-  step 'I am a registered user'
-  step 'I am signed in'
-end
+# Given(/^I am logged in as a user$/) do
+#   step 'I am a registered user'
+#   step 'I am signed in'
+# end
