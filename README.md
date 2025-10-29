@@ -167,16 +167,6 @@ bundle exec rspec
 bundle exec cucumber
 ```
 
-### Code quality
-
-```bash
-# Run Rubocop
-bundle exec rubocop
-
-# Run Brakeman security scan
-bundle exec brakeman
-```
-
 ---
 
 ## Contributing
