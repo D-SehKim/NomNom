@@ -5,7 +5,6 @@
         "lines": [
           1,
           1,
-          null,
           null
         ]
       },
@@ -142,8 +141,7 @@
         "lines": [
           1,
           1,
-          1,
-          null
+          1
         ]
       },
       "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/ingredient.rb": {
@@ -241,6 +239,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1761698803
+    "timestamp": 1761700943
   }
 }
