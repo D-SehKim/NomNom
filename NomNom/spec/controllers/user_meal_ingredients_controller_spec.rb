@@ -52,4 +52,14 @@ RSpec.describe UserMealIngredientsController, type: :controller do
       end
     end
   end
+
+  describe "DELETE #destroy" do
+    it "destroys the ingredient and redirects" do
+      expect {
+        delete :destroy, params: { user_meal_id: meal.id, id: user_meal_ingredient.id }
+      }.to change(UserMealIngredient, :count).by(-1)
+      expect(response).to redirect_to(user_meals_path)
+      expect(flash[:notice]).to eq("Ingredient removed successfully.")
+    end
+  end
 end
