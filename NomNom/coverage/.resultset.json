@@ -137,7 +137,6 @@
       },
       "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/controllers/recipes_controller.rb": {
         "lines": [
-<<<<<<< HEAD
           0,
           null,
           0,
@@ -179,12 +178,6 @@
           0
         ],
         "branches": {}
-=======
-          1,
-          1,
-          1
-        ]
->>>>>>> dk
       },
       "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/controllers/user_meal_ingredients_controller.rb": {
         "lines": [
@@ -402,10 +395,6 @@
         "branches": {}
       }
     },
-<<<<<<< HEAD
     "timestamp": 1761706634
-=======
-    "timestamp": 1761700943
->>>>>>> dk
   }
 }
