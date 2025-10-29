@@ -68,7 +68,7 @@ _Color-coded status system to track food freshness_
 ## Tech Stack
 
 - **Framework:** Ruby on Rails 8.1.0
-- **Ruby Version:** 3.3.8
+- **Ruby Version:** 3.4.2
 - **Database:** PostgreSQL
 - **Authentication:** Devise
 - **Testing:** Cucumber, RSpec
