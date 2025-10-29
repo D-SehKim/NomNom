@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/user.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/user.rb": {
         "lines": [
           1,
           null,
@@ -15,14 +15,14 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/application_record.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/controllers/grocery_items_controller.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/controllers/grocery_items_controller.rb": {
         "lines": [
           1,
           1,
@@ -80,7 +80,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/controllers/application_controller.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null,
@@ -91,14 +91,14 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/controllers/home_controller.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/controllers/home_controller.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/controllers/items_controller.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/controllers/items_controller.rb": {
         "lines": [
           1,
           1,
@@ -132,7 +132,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/controllers/recipes_controller.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/controllers/recipes_controller.rb": {
         "lines": [
           1,
           null,
@@ -175,7 +175,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/controllers/user_meal_ingredients_controller.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/controllers/user_meal_ingredients_controller.rb": {
         "lines": [
           1,
           1,
@@ -199,7 +199,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/controllers/user_meals_controller.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/controllers/user_meals_controller.rb": {
         "lines": [
           1,
           1,
@@ -258,7 +258,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/mailers/application_mailer.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/mailers/application_mailer.rb": {
         "lines": [
           1,
           1,
@@ -266,7 +266,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/grocery_item.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/grocery_item.rb": {
         "lines": [
           1,
           1,
@@ -280,7 +280,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/user_meal_ingredient.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/user_meal_ingredient.rb": {
         "lines": [
           1,
           1,
@@ -288,7 +288,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/recipe_ingredient.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/recipe_ingredient.rb": {
         "lines": [
           1,
           1,
@@ -296,7 +296,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/recipe.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/recipe.rb": {
         "lines": [
           1,
           1,
@@ -310,7 +310,7 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/user_meal.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/user_meal.rb": {
         "lines": [
           1,
           1,
@@ -339,13 +339,13 @@
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/item.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/item.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/ingredient.rb": {
+      "/Users/danielkim/CSW4152/Project/SaaS_Project/NomNom/app/models/ingredient.rb": {
         "lines": [
           1,
           1,
@@ -354,6 +354,6 @@
         ]
       }
     },
-    "timestamp": 1761770017
+    "timestamp": 1761770599
   }
 }

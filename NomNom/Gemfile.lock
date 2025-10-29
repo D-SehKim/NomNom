@@ -514,7 +514,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
-  pg (~> 1.2)
+  pg
   propshaft
   puma (>= 5.0)
   rails (~> 8.1.0)
@@ -535,6 +535,9 @@ DEPENDENCIES
   tzinfo-data
   web-console
   webmock
+
+RUBY VERSION
+   ruby 3.4.2p28
 
 BUNDLED WITH
    2.6.2
