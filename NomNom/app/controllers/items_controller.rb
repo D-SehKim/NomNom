@@ -19,8 +19,6 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     if @item.save
       redirect_to items_path, notice: "Item added successfully."
-    else
-      render :new
     end
   end
 

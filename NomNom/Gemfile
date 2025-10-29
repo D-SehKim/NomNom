@@ -54,6 +54,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem 'factory_bot_rails'
+
+  gem "rails-controller-testing"
 end
 
 group :development do
@@ -69,6 +73,10 @@ group :test do
   
   # Add Cucumber for acceptance testing
   gem "cucumber-rails", require: false
+
+  gem 'shoulda-matchers', '~> 6.0'
+
+  gem 'webmock'
 
   gem 'simplecov', require: false
 end
