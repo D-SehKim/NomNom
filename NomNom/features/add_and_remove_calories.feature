@@ -1,43 +1,43 @@
 Feature: Add and remove recipes/ingredients to count towards total calorie intake
 
-  As a health focused user
-  So that I can remember what I have eaten in the day
-  I want to be able to add and remove items from my list
+	As a health focused user
+	So that I can remember what I have eaten in the day
+	I want to be able to add and remove items from my list
 
-Background: movies have been added to database
+Background:
+	Given I am logged in as a user
+	And the following recipes exist:
+		| name       | calories_per_serving |
+		| Pancakes   | 300                 |
+		| Omelette   | 250                 |
+	And the following ingredients exist:
+		| name    | calories_per_unit |
+		| Sugar   | 50               |
+		| Butter  | 100              |
 
-  Given the following movies exist:
-  | title                   | rating | release_date |
-  | Aladdin                 | G      | 25-Nov-1992  |
-  | The Terminator          | R      | 26-Oct-1984  |
-  | When Harry Met Sally    | R      | 21-Jul-1989  |
-  | The Help                | PG-13  | 10-Aug-2011  |
-  | Chocolat                | PG-13  | 5-Jan-2001   |
-  | Amelie                  | R      | 25-Apr-2001  |
-  | 2001: A Space Odyssey   | G      | 6-Apr-1968   |
-  | The Incredibles         | PG     | 5-Nov-2004   |
-  | Raiders of the Lost Ark | PG     | 12-Jun-1981  |
-  | Chicken Run             | G      | 21-Jun-2000  |
+Scenario: Adding a recipe to the calorie tracker
+	When I add the recipe "Pancakes" with 2 servings
+	Then I should see "Pancakes" listed
+	And I should see total calories for "Pancakes" equal to 600
 
-  And I am on the RottenPotatoes home page
-  Then 10 seed movies should exist
+Scenario: Adding a custom ingredient to the calorie tracker
+  When I add the custom ingredient "Sugar" with quantity 3
+  Then I should see "Sugar" listed
+  And I should see total calories for "Sugar" equal to 150
 
-Scenario: restrict to movies with "PG" or "R" ratings
-  When I check the following ratings: PG, R
-  # enter step(s) to check the "PG" and "R" checkboxes
-  # enter step(s) to uncheck all other checkboxes
-  # enter step to "submit" the search form on the homepage
-  # enter step(s) to ensure that PG and R movies are visible
-  # enter step(s) to ensure that other movies are not visible
-  And I uncheck the following ratings: G, PG-13
-  And I press "Refresh"
-  Then I should see the following movies: The Terminator, When Harry Met Sally, Amelie, The Incredibles, Raiders of the Lost Ark
-  And I should not see the following movies: Aladdin, The Help, Chocolat, 2001: A Space Odyssey, Chicken Run
+Scenario: Removing a recipe
+	Given I have a meal with the recipe "Omelette" and 1 serving
+	When I remove the recipe "Omelette"
+	Then I should not see "Omelette" on the calorie tracker
 
+Scenario: Removing a custom ingredient
+	Given I have added a custom ingredient "Butter" with quantity 2
+	When I remove the custom ingredient "Butter"
+	Then I should not see "Butter" on the calorie tracker
 
-Scenario: all ratings selected
-  # your steps here
-  # Then complete the rest of of this scenario
-  When I check the following ratings: G, PG, PG-13, R
-  And I press "Refresh"
-  Then I should see all the movies
+Scenario: Total calories update correctly
+  Given I have a meal with recipe "Pancakes" and 1 serving and custom ingredients:
+    | name  | calories_per_unit | quantity |
+    | Sugar | 50               | 2        |
+  When I visit the calorie tracker page
+  Then I should see total calories consumed equal to 400
