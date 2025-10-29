@@ -127,3 +127,4 @@ This project is part of a Columbia University SaaS course assignment.
 ## Acknowledgments
 
 - Built with Ruby on Rails
+- Used devise for login applications
