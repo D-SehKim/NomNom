@@ -1,12 +1,12 @@
-Feature: Display how many calories in each meal and item
+Feature: Add and remove recipes/ingredients to count towards total calorie intake
 
   As a health focused user
-  So that I can keep track of my calorie intake
-  I want to see calorie counts for each item and the total calorie count
+  So that I can remember what I have eaten in the day
+  I want to be able to add and remove items from my list
 
-Background: recipes and ingredients have been added to database
+Background: movies have been added to database
 
-  Given the following recipes exist:
+  Given the following movies exist:
   | title                   | rating | release_date |
   | Aladdin                 | G      | 25-Nov-1992  |
   | The Terminator          | R      | 26-Oct-1984  |

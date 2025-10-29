@@ -9,9 +9,17 @@
 #   end
 
 # Clear existing data
-RecipeIngredient.destroy_all
+UserMealIngredient.destroy_all
+UserMeal.destroy_all
 Ingredient.destroy_all
+RecipeIngredient.destroy_all
 Recipe.destroy_all
+User.destroy_all
+
+User.find_or_create_by!(email: "test@example.com") do |user|
+  user.password = "password"
+  user.password_confirmation = "password"
+end
 
 # Ingredients (calories per 1g or 1ml or per unit)
 flour      = Ingredient.create!(name: "Flour", calories_per_unit: 3.64)    # per gram
