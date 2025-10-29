@@ -353,20 +353,8 @@
           0
         ],
         "branches": {}
-      },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/jobs/application_job.rb": {
-        "lines": [
-          0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          0
-        ],
-        "branches": {}
       }
     },
-    "timestamp": 1761768033
+    "timestamp": 1761768249
   }
 }
