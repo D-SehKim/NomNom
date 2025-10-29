@@ -1,6 +1,27 @@
 {
   "RSpec": {
     "coverage": {
+      "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/grocery_item.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          3,
+          3,
+          2,
+          null
+        ]
+      },
+      "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
       "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/controllers/grocery_items_controller.rb": {
         "lines": [
           1,
@@ -84,10 +105,33 @@
           null
         ]
       },
-      "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/application_record.rb": {
+      "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/user_meal.rb": {
         "lines": [
           1,
           1,
+          1,
+          1,
+          1,
+          0,
+          null,
+          1,
+          1,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
           null
         ]
       },
@@ -299,21 +343,6 @@
         ],
         "branches": {}
       },
-      "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/grocery_item.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
       "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/ingredient.rb": {
         "lines": [
           0,
@@ -354,37 +383,6 @@
         ],
         "branches": {}
       },
-      "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/user_meal.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {}
-      },
       "/Users/aidesigner/Columbia Univ Course/saas/SaaS_Project/NomNom/app/models/user_meal_ingredient.rb": {
         "lines": [
           0,
@@ -395,6 +393,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1761706634
+    "timestamp": 1761715103
   }
 }
