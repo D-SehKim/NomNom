@@ -8,6 +8,9 @@
   <p>
     <%= link_to "Go to Expiration Date Tracker", items_path, class: "btn btn-primary" %>
   </p>
+  <p>
+    <%= link_to "Go to Calorie Tracker", user_meals_path, class: "btn btn-primary" %>
+  </p>
   <%= button_to "Logout", destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to "Sign Up", new_user_registration_path %> |
