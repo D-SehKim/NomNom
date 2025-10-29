@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :ingredient do
-    name { "Sugar" }
+    sequence(:name) { |n| "Ingredient #{n}" }
     calories_per_unit { 50 }
   end
 end

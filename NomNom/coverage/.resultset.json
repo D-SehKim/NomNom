@@ -237,6 +237,20 @@
           null
         ]
       },
+      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/recipe.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null,
+          1,
+          2,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
       "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/user_meal.rb": {
         "lines": [
           1,
@@ -269,20 +283,6 @@
       "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/item.rb": {
         "lines": [
           1,
-          null
-        ]
-      },
-      "/Users/rebeccaz/Developer/Columbia/Saas4152/SaaS_Project/NomNom/app/models/recipe.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null,
-          1,
-          0,
-          0,
-          null,
-          null,
           null
         ]
       },
@@ -367,6 +367,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1761766933
+    "timestamp": 1761768033
   }
 }

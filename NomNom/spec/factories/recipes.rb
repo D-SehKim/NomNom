@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :recipe do
-    name { "Sample Recipe" }
+    sequence(:name) { |n| "Recipe #{n}" }
   end
 end
