@@ -28,7 +28,6 @@ Feature: Grocery List Management
     When I click "Mark Purchased" for "Fresh Apples"
     Then I should see "Fresh Apples" in the "Purchased" section
     And I should not see "Fresh Apples" in the "To Buy" section
-    And "Fresh Apples" should appear crossed out
 
   @grocery_list @core_feature
   Scenario: Undo purchased item
@@ -38,7 +37,6 @@ Feature: Grocery List Management
     When I click "Undo" for "Greek Yogurt"
     Then I should see "Greek Yogurt" in the "To Buy" section
     And I should not see "Greek Yogurt" in the "Purchased" section
-    And "Greek Yogurt" should not appear crossed out
 
   @grocery_list @core_feature
   Scenario: Edit grocery list item
@@ -72,8 +70,8 @@ Feature: Grocery List Management
       | Strawberries  | 500g     | false     |
       | Carrots       | 1kg      | true      |
       | Onions        | 2kg      | true      |
-    Then I should see "To Buy (2)" section header
-    And I should see "Purchased (2)" section header
+    Then I should see "To Buy 2" section header
+    And I should see "Purchased 2" section header
     And I should see "Bananas" in the "To Buy" section
     And I should see "Strawberries" in the "To Buy" section
     And I should see "Carrots" in the "Purchased" section

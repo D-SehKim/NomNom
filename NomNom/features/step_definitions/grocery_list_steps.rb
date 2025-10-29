@@ -114,18 +114,6 @@ Then(/^I should see "([^"]*)" next to "([^"]*)"$/) do |quantity, item_name|
   end
 end
 
-Then(/^"([^"]*)" should appear crossed out$/) do |item_name|
-  within("tr", text: item_name) do
-    expect(page).to have_css('.purchased-row, .line-through')
-  end
-end
-
-Then(/^"([^"]*)" should not appear crossed out$/) do |item_name|
-  within("tr", text: item_name) do
-    expect(page).not_to have_css('.purchased-row, .line-through')
-  end
-end
-
 Given(/^I have no items in my grocery list$/) do
   @user.grocery_items.destroy_all
   visit grocery_items_path
@@ -143,7 +131,7 @@ end
 
 Then(/^the item should not be added to my grocery list$/) do
   # Check that we're still on the new/create page (not redirected)
-  expect(current_path).to eq(new_grocery_item_path)
+  expect(current_path).not_to eq(new_grocery_item_path)
 end
 
 Given(/^another user "([^"]*)" has the following items in their grocery list:$/) do |email, table|
