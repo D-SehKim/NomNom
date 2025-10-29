@@ -4,40 +4,29 @@ Feature: Display how many calories in each meal and item
   So that I can keep track of my calorie intake
   I want to see calorie counts for each item and the total calorie count
 
-Background: recipes and ingredients have been added to database
+Scenario: Viewing calories for a recipe meal
+  Given I am logged in as a user
+  And I have a meal with the recipe "Pancakes"
+  When I visit the calorie tracker page
+  Then I should see "Pancakes" listed
+  And I should see the calories for each recipe ingredient
+  And I should see the total calories for the recipe
 
-  Given the following recipes exist:
-  | title                   | rating | release_date |
-  | Aladdin                 | G      | 25-Nov-1992  |
-  | The Terminator          | R      | 26-Oct-1984  |
-  | When Harry Met Sally    | R      | 21-Jul-1989  |
-  | The Help                | PG-13  | 10-Aug-2011  |
-  | Chocolat                | PG-13  | 5-Jan-2001   |
-  | Amelie                  | R      | 25-Apr-2001  |
-  | 2001: A Space Odyssey   | G      | 6-Apr-1968   |
-  | The Incredibles         | PG     | 5-Nov-2004   |
-  | Raiders of the Lost Ark | PG     | 12-Jun-1981  |
-  | Chicken Run             | G      | 21-Jun-2000  |
+Scenario: Viewing calories for a custom ingredient
+  Given I am logged in as a user
+  And I have a custom ingredient "Sugar"
+  When I visit the calorie tracker page
+  Then I should see "Sugar" listed
+  And I should see the calories for the ingredient
 
-  And I am on the RottenPotatoes home page
-  Then 10 seed movies should exist
+Scenario: Viewing total calories consumed for custom ingredients
+  Given I am logged in as a user
+  And I have custom ingredients logged for today
+  When I visit the calorie tracker page
+  Then I should see the total calories consumed for custom ingredients
 
-Scenario: restrict to movies with "PG" or "R" ratings
-  When I check the following ratings: PG, R
-  # enter step(s) to check the "PG" and "R" checkboxes
-  # enter step(s) to uncheck all other checkboxes
-  # enter step to "submit" the search form on the homepage
-  # enter step(s) to ensure that PG and R movies are visible
-  # enter step(s) to ensure that other movies are not visible
-  And I uncheck the following ratings: G, PG-13
-  And I press "Refresh"
-  Then I should see the following movies: The Terminator, When Harry Met Sally, Amelie, The Incredibles, Raiders of the Lost Ark
-  And I should not see the following movies: Aladdin, The Help, Chocolat, 2001: A Space Odyssey, Chicken Run
-
-
-Scenario: all ratings selected
-  # your steps here
-  # Then complete the rest of of this scenario
-  When I check the following ratings: G, PG, PG-13, R
-  And I press "Refresh"
-  Then I should see all the movies
+Scenario: Viewing total calories consumed for everything
+  Given I am logged in as a user
+  And I have meals logged for today
+  When I visit the calorie tracker page
+  Then I should see the total calories consumed for everything

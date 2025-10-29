@@ -9,14 +9,14 @@
 #   end
 
 # Clear existing data
+User.destroy_all
 UserMealIngredient.destroy_all
 UserMeal.destroy_all
-Ingredient.destroy_all
 RecipeIngredient.destroy_all
 Recipe.destroy_all
-User.destroy_all
+Ingredient.destroy_all
 
-User.find_or_create_by!(email: "test@example.com") do |user|
+User.find_or_create_by!(email: "test@nomnom.com") do |user|
   user.password = "password"
   user.password_confirmation = "password"
 end
