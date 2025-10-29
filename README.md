@@ -15,67 +15,6 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 ---
 
-## Features
-
-### Grocery List
-
-- Create and manage shopping lists
-- Mark items as purchased/unpurchased
-- Add quantity and notes for each item
-- User-specific lists
-
-### Expiration Date Tracker
-
-- Track food items and their expiration dates
-- Color-coded status badges (Fresh/Warning/Urgent/Expired)
-- Reduce food waste by monitoring what you have
-
-### Recipe Search
-
-- Discover recipes based on available ingredients
-- Find new ways to use what you already have
-
-### Modern UI
-
-- Fruit-themed color palette
-- Responsive design (mobile-friendly)
-- Gradient buttons and smooth animations
-- Intuitive navigation
-
----
-
-## Screenshots
-
-### Homepage
-
-![Homepage](/NomNom/public/screenshots/homepage.png)
-_Feature cards for quick access to all functionality_
-
-### Grocery List
-
-![Grocery List](/NomNom/public/screenshots/grocery-list.png)
-_Organize your shopping with separate views for items to buy and purchased items_
-
-### Expiration Tracker
-
-![Expiration Tracker](/NomNom/public/screenshots/expiration-tracker.png)
-_Color-coded status system to track food freshness_
-
-> **Note:** Screenshots coming soon! Run the app locally to see the full UI.
-
----
-
-## Tech Stack
-
-- **Framework:** Ruby on Rails 8.1.0
-- **Ruby Version:** 3.4.2
-- **Database:** PostgreSQL
-- **Authentication:** Devise
-- **Testing:** Cucumber, RSpec
-- **Styling:** Custom CSS with modern design system
-
----
-
 ## Prerequisites
 
 - Ruby 3.4.2 (via rbenv)
@@ -153,6 +92,10 @@ The app will be available at `http://localhost:3000`
 
 ## Development
 
+```
+git push heroku master
+```
+
 ### Running tests
 
 ```bash
@@ -161,16 +104,6 @@ bundle exec rspec
 
 # Run Cucumber features
 bundle exec cucumber
-```
-
-### Code quality
-
-```bash
-# Run Rubocop
-bundle exec rubocop
-
-# Run Brakeman security scan
-bundle exec brakeman
 ```
 
 ---
@@ -194,3 +127,4 @@ This project is part of a Columbia University SaaS course assignment.
 ## Acknowledgments
 
 - Built with Ruby on Rails
+- Used devise for login applications
