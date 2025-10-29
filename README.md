@@ -6,7 +6,7 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 ---
 
-## Team
+## Team 10
 
 - **Daniel Kim** - (dk3506)
 - **Minsuk Kim** - (mk4434)
