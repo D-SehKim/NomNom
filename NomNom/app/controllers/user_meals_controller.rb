@@ -30,8 +30,17 @@ class UserMealsController < ApplicationController
     redirect_to user_meals_path, notice: "All meals and custom ingredients have been cleared!"
   end
 
+  # def destroy_ingredient
+  #   umi = UserMealIngredient.find(params[:id])
+  #   umi.destroy
+  #   redirect_to user_meals_path, notice: "Ingredient removed."
+  # end
   def destroy_ingredient
-    umi = UserMealIngredient.find(params[:id])
+    # ensure the ingredient belongs to the current user's meal
+    umi = UserMealIngredient.joins(:user_meal)
+            .where(user_meals: { user_id: current_user.id })
+            .find(params[:id])
+
     umi.destroy
     redirect_to user_meals_path, notice: "Ingredient removed."
   end

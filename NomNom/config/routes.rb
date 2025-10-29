@@ -16,6 +16,10 @@ Rails.application.routes.draw do
 
     # delete :clear_all, on: :collection
     resources :user_meal_ingredients, only: [:destroy]
+
+    member do
+      delete :destroy_ingredient
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
