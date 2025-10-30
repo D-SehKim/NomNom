@@ -90,21 +90,26 @@ The app will be available at `http://localhost:3000`
 
 ---
 
-## Development
+## Heroku/Heroku Link
 
 ```
 git push heroku master
 ```
 
+The link is https://nomnom-app-040d7eb8feb7.herokuapp.com/
+
 ### Running tests
 
 ```bash
 # Run all tests
+# cd NomNom if you're in the outside folder
 bundle exec rspec
 
 # Run Cucumber features
 bundle exec cucumber
 ```
+
+The tests can be seen under their folders respectivly, i.e "/NomNom/spec" for RSpec, and "/NomNom/features" for Cucumber.  
 
 ---
 
