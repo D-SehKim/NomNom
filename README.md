@@ -6,6 +6,12 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 ---
 
+## Project Iteration 1 Commit Hash
+
+cafbda0ea4a2044535a6a44b676d805266e08502
+
+---
+
 ## Team 10
 
 - **Daniel Kim** - (dk3506)
