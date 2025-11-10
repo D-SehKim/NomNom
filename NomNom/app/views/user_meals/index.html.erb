@@ -1,62 +1,107 @@
-<h1>Calorie Tracker</h1>
+<% content_for :title, "Calorie Tracker" %>
 
-<% if notice %>
-  <p style="color: green;"><%= notice %></p>
-<% end %>
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h1 style="margin: 0;">🍔 Calorie Tracker</h1>
+    <%= link_to "➕ Add Item", new_user_meal_path, method: :get, class: "btn btn-primary" %>
+  </div>
 
-<h2>Today's Meals</h2>
-
-<% if @user_meals.any? %>
-  <!-- Recipes Section -->
-  <div style="border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; background: #f9f9f9;">
-    <h3>Recipes</h3>
-    <% @user_meals.each do |meal| %>
-      <% if meal.recipe.present? && meal.recipe.recipe_ingredients.any? %>
-        <div style="border: 1px solid #aaa; padding: 10px; margin-bottom: 10px; border-radius: 5px; background: #fff; display: flex; justify-content: space-between; align-items: flex-start;">
-          <div>
-            <h4><%= meal.recipe.name %> (<%= meal.servings %> serving<%= 's' if meal.servings != 1 %>)</h4>
-            <ul>
-              <% meal.recipe.recipe_ingredients.each do |ri| %>
-                <li>
-                  <%= ri.ingredient.name %> — <%= ri.quantity %> × <%= ri.ingredient.calories_per_unit %> cal = <%= ri.quantity * ri.ingredient.calories_per_unit %> cal
-                </li>
+  <% if @user_meals.any? %>
+    <h3 style="margin-top: 0;">Logged Meals for <%= Date.today.strftime("%B %d, %Y") %></h3>
+    <!-- Recipes Section -->
+    <div class="to-buy-section" style="background: linear-gradient(135deg, rgba(255,230,109,0.2) 0%, rgba(255,230,109,0.05) 100%); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
+      <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">Recipes</h2>
+      <% if @user_meals.any? && @user_meals.any? { |m| m.recipe.present? && m.recipe.recipe_ingredients.any? } %>
+        <table>
+          <thead>
+            <tr>
+              <th>Recipe</th>
+              <th>Quantity</th>
+              <th>Ingredients</th>
+              <th>Calories</th>
+              <th style="text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @user_meals.each do |meal| %>
+              <% if meal.recipe.present? && meal.recipe.recipe_ingredients.any? %>
+                <tr>
+                  <td><strong style="font-size: 1.1rem;"><%= meal.recipe.name %></strong></td>
+                  <td>
+                    <span style="background: var(--success); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-weight: 600;">
+                      <%= meal.servings %>
+                    </span>
+                  </td>
+                  <td><%= meal.recipe.recipe_ingredients.map { |ri| ri.ingredient.name }.join(", ") %></td>
+                  <td><%= meal.total_calories %> cal</td>
+                  <td style="text-align: center;">
+                    <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                      <%= button_to "🗑️ Delete", user_meal_path(meal), method: :delete, data: { confirm: "Remove this meal?" }, class: "btn btn-sm btn-danger" %>
+                    </div>
+                  </td>
+                </tr>
               <% end %>
-            </ul>
-            <p><strong>Total for this recipe:</strong> <%= meal.total_calories %> cal</p>
-          </div>
-          <div>
-            <%= button_to "Remove", user_meal_path(meal), method: :delete, data: { confirm: "Remove this recipe?" }, class: "btn btn-sm btn-danger" %>
-          </div>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="empty-state">
+          <div class="empty-state-icon">🎉</div>
+          <p>No logged recipes yet. Start by adding a new recipe!</p>
         </div>
       <% end %>
-    <% end %>
-  </div>
+    </div>
 
-  <!-- Custom Ingredients Section -->
-  <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; background: #f9f9f9;">
-    <h3>Custom Ingredients</h3>
-    <% total_custom_calories = 0 %>
-    <% @user_meals.each do |meal| %>
-      <% meal.user_meal_ingredients.each do |umi| %>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
-          <span>
-            <%= umi.ingredient.name %> — <%= umi.quantity %> × <%= umi.ingredient.calories_per_unit %> cal = <%= umi.quantity * umi.ingredient.calories_per_unit %> cal
-          </span>
-          <%= button_to "Remove", user_meal_user_meal_ingredient_path(meal, umi), method: :delete, data: { confirm: "Remove this ingredient?" }, class: "btn btn-sm btn-danger" %>
+    <!-- Individual Ingredients Section -->
+    <div class="to-buy-section" style="background: linear-gradient(135deg, rgba(149,225,211,0.2) 0%, rgba(149,225,211,0.05) 100%); padding: 1.5rem; border-radius: var(--radius-md);">
+      <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">Individual Ingredients</h2>
+      <% total_custom_calories = 0 %>
+      <% if @user_meals.any? && @user_meals.any? { |m| m.user_meal_ingredients.any? } %>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Calories Per Unit</th>
+              <th>Total Calories</th>
+              <th style="text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @user_meals.each do |meal| %>
+              <% meal.user_meal_ingredients.each do |umi| %>
+                <tr>
+                  <td><strong style="font-size: 1.1rem;"><%= umi.ingredient.name %></strong></td>
+                  <td>
+                    <span style="background: var(--success); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-weight: 600;">
+                      <%= umi.quantity %>
+                    </span>
+                  </td>
+                  <td><%= umi.ingredient.calories_per_unit %> cal</td>
+                  <td><%= umi.quantity * umi.ingredient.calories_per_unit %> cal</td>
+                  <td style="text-align: center;">
+                    <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                      <%= button_to "🗑️ Delete", user_meal_user_meal_ingredient_path(meal, umi), method: :delete, data: { confirm: "Remove this ingredient?" }, class: "btn btn-sm btn-danger" %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="empty-state">
+          <div class="empty-state-icon">🛒</div>
+          <p>No logged ingredients yet. Start by adding a new ingredient!</p>
         </div>
-        <% total_custom_calories += umi.quantity * umi.ingredient.calories_per_unit %>
       <% end %>
-    <% end %>
-    <p><strong>Total Calories for All Custom Ingredients:</strong> <%= total_custom_calories %> cal</p>
-  </div>
+    </div>
+  <% else %>
+    <p style="color: var(--text-muted);">You haven't logged any meals yet. Start by adding a new meal!</p>
+  <% end %>
+</div>
 
-  <h3>Total Calories Consumed: <%= @total_calories %> cal</h3>
-<% else %>
-  <p>No meals logged yet.</p>
-<% end %>
-
-<div style="display: flex; gap: 10px; margin-top: 20px;">
-  <%= button_to "Add New Meal", new_user_meal_path, method: :get, class: "btn btn-primary" %>
+<div style="display: flex; text-align: center; gap: 10px; margin-top: 2rem;">
   <%= button_to "Clear All Meals", clear_all_user_meals_path, method: :delete, data: { confirm: "Are you sure you want to delete all meals?" }, class: "btn btn-danger" %>
-  <%= link_to "Back to Home", root_path, class: "btn btn-secondary" %>
+  <%= link_to "← Back to Home", root_path, class: "btn btn-secondary" %>
 </div>
