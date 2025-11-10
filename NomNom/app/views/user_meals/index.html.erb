@@ -54,8 +54,9 @@
 
     <!-- Individual Ingredients Section -->
     <div class="to-buy-section" style="background: linear-gradient(135deg, rgba(149,225,211,0.2) 0%, rgba(149,225,211,0.05) 100%); padding: 1.5rem; border-radius: var(--radius-md);">
-      <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">Individual Ingredients</h2>
-      <% total_custom_calories = 0 %>
+      <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
+        Individual Ingredients
+      </h2>
       <% if @user_meals.any? && @user_meals.any? { |m| m.user_meal_ingredients.any? } %>
         <table>
           <thead>
@@ -101,7 +102,7 @@
   <% end %>
 </div>
 
-<div style="display: flex; text-align: center; gap: 10px; margin-top: 2rem;">
+<div style="display: flex; justify-content: center; text-align: center; gap: 10px; margin-top: 2rem;">
   <%= button_to "Clear All Meals", clear_all_user_meals_path, method: :delete, data: { confirm: "Are you sure you want to delete all meals?" }, class: "btn btn-danger" %>
   <%= link_to "← Back to Home", root_path, class: "btn btn-secondary" %>
 </div>
