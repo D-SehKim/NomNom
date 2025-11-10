@@ -4,6 +4,7 @@
   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
     <h1 style="margin: 0;">🍔 Calorie Tracker</h1>
     <%= link_to "➕ Add Item", new_user_meal_path, method: :get, class: "btn btn-primary" %>
+    <% total_logged_calories = 0 %>
   </div>
 
   <% if @user_meals.any? %>
@@ -108,6 +109,7 @@
             <%= total_custom_calories %> cal
           </span>
         </div>
+
       <% else %>
         <div class="empty-state">
           <div class="empty-state-icon">🛒</div>
@@ -115,6 +117,17 @@
         </div>
       <% end %>
     </div>
+
+    <div>
+      <% total_logged_calories = total_recipe_calories + total_custom_calories %>
+      <h2 style="margin-top: 2rem; text-align: center; color: var(--text-dark);">
+        Total Calories Today: 
+        <span style="background: var(--primary); color: var(--text-dark); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 1.2rem; font-weight: 700;">
+          <%= total_logged_calories %> cal
+        </span>
+      </h2>
+    </div>
+    
   <% else %>
     <p style="color: var(--text-muted);">You haven't logged any meals yet. Start by adding a new meal!</p>
   <% end %>
