@@ -10,6 +10,7 @@
     <h3 style="margin-top: 0;">Logged Meals for <%= Date.today.strftime("%B %d, %Y") %></h3>
     <!-- Recipes Section -->
     <div class="to-buy-section" style="background: linear-gradient(135deg, rgba(255,230,109,0.2) 0%, rgba(255,230,109,0.05) 100%); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem;">
+      <% total_recipe_calories = 0 %>
       <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">Recipes</h2>
       <% if @user_meals.any? && @user_meals.any? { |m| m.recipe.present? && m.recipe.recipe_ingredients.any? } %>
         <table>
@@ -25,6 +26,7 @@
           <tbody>
             <% @user_meals.each do |meal| %>
               <% if meal.recipe.present? && meal.recipe.recipe_ingredients.any? %>
+                <% total_recipe_calories += meal.total_calories %>
                 <tr>
                   <td><strong style="font-size: 1.1rem;"><%= meal.recipe.name %></strong></td>
                   <td>
@@ -44,6 +46,13 @@
             <% end %>
           </tbody>
         </table>
+
+        <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem;">
+          <strong style="font-size: 1.1rem;">Total Calories:</strong>
+          <span style="background: var(--accent); color: var(--text-dark); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 1rem; font-weight: 700;">
+            <%= total_recipe_calories %> cal
+          </span>
+        </div>
       <% else %>
         <div class="empty-state">
           <div class="empty-state-icon">🎉</div>
@@ -54,6 +63,7 @@
 
     <!-- Individual Ingredients Section -->
     <div class="to-buy-section" style="background: linear-gradient(135deg, rgba(149,225,211,0.2) 0%, rgba(149,225,211,0.05) 100%); padding: 1.5rem; border-radius: var(--radius-md);">
+      <% total_custom_calories = 0 %>
       <h2 style="margin-top: 0; display: flex; align-items: center; gap: 0.5rem;">
         Individual Ingredients
       </h2>
@@ -71,6 +81,7 @@
           <tbody>
             <% @user_meals.each do |meal| %>
               <% meal.user_meal_ingredients.each do |umi| %>
+                <% total_custom_calories += umi.quantity * umi.ingredient.calories_per_unit %>
                 <tr>
                   <td><strong style="font-size: 1.1rem;"><%= umi.ingredient.name %></strong></td>
                   <td>
@@ -90,6 +101,13 @@
             <% end %>
           </tbody>
         </table>
+
+        <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; align-items: center; gap: 0.5rem;">
+          <strong style="font-size: 1.1rem;">Total Calories:</strong>
+          <span style="background: var(--success); color: var(--text-dark); padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 1rem; font-weight: 700;">
+            <%= total_custom_calories %> cal
+          </span>
+        </div>
       <% else %>
         <div class="empty-state">
           <div class="empty-state-icon">🛒</div>
