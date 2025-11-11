@@ -1,0 +1,152 @@
+<% content_for :title, "Log a new meal" %>
+
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+  <h1 style="text-align: center; margin-bottom: 0.5rem;">Log a New Meal</h1>
+  <p class="text-center text-muted" style="margin-bottom: 2rem;">What did you eat today?</p>
+
+  <%= form_with(model: @user_meal, local: true) do |f| %>
+    <div>
+      <%= f.label :choice, "Would you like to use a recipe or add ingredients?" %><br>
+      <select id="meal-choice" onchange="toggleMealForm()">
+        <option value="">Select an option</option>
+        <option value="recipe">Use Recipe</option>
+        <option value="custom">Add Ingredients</option>
+      </select>
+    </div>
+
+    <!-- Recipe Section -->
+    <div id="recipe-section" style="display: none; margin-top: 15px;">
+      <h3>Choose a Recipe</h3>
+      <div style="margin-bottom: 10px;">
+        <%= f.collection_select :recipe_id, @recipes, :id, :name, prompt: "Select a recipe" %>
+        <div class="form-group">
+          <%= f.label :servings, "Servings*" %>
+          <%= f.text_field :servings, placeholder: "e.g., 1", required: true %>
+          <small class="text-muted">How many servings did you have?</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Ingredients Section -->
+    <div id="ingredients-section" style="display: none; margin-top: 15px;">
+      <h3>Add Custom Ingredients</h3>
+      <div id="custom-ingredients-container">
+        <%= f.fields_for :user_meal_ingredients do |umi_form| %>
+          <div class="form-group" style="display: flex; flex-direction: column; margin-bottom: 15px;">
+            <%= umi_form.label :ingredient_id, "Ingredient*", class: "form-label", style: "margin-top: 1rem;" %>
+            <%= umi_form.collection_select :ingredient_id, @ingredients, :id, :name, prompt: "Select an ingredient", class: "form-control" %>
+            <%= umi_form.label :quantity, "Quantity*", class: "form-label", style: "margin-top: 1rem;" %>
+            <%= umi_form.text_field :quantity, placeholder: "e.g., 1", min: 1, required: true, class: "form-control" %>
+            <span style="display: flex; margin-top: 0.5rem;">
+              <small class="text-muted">Quantity of each ingredient</small>
+              <button type="button" onclick="removeIngredient(this)" class="btn btn-sm btn-danger" style="margin-left: auto;">Remove</button>
+            </span>
+          </div>
+        <% end %>
+      </div>
+
+      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+        <button 
+          type="button" 
+          onclick="addCustomIngredient()" 
+          class="btn btn-secondary" 
+          style="flex: 1;"
+        >
+          ➕ Add Another Ingredient
+        </button>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <%= f.submit "Save Meal", class: "btn btn-primary", style: "flex: 1;" %>
+      <%= link_to "Cancel", user_meals_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+  }
+</style>
+
+<script>
+  function toggleMealForm() {
+    const choice = document.getElementById('meal-choice').value;
+    const recipeSection = document.getElementById('recipe-section');
+    const ingredientsSection = document.getElementById('ingredients-section');
+
+    if (choice === "recipe") {
+      recipeSection.style.display = "block";
+      ingredientsSection.style.display = "none";
+      toggleInputs(recipeSection, true);
+      toggleInputs(ingredientsSection, false);
+    } else if (choice === "custom") {
+      recipeSection.style.display = "none";
+      ingredientsSection.style.display = "block";
+      toggleInputs(recipeSection, false);
+      toggleInputs(ingredientsSection, true);
+    } else {
+      recipeSection.style.display = "none";
+      ingredientsSection.style.display = "none";
+      toggleInputs(recipeSection, false);
+      toggleInputs(ingredientsSection, false);
+    }
+  }
+
+  function toggleInputs(section, enable) {
+    const inputs = section.querySelectorAll("input, select, textarea");
+    inputs.forEach(input => {
+      input.disabled = !enable;
+    });
+  }
+
+  function addCustomIngredient() {
+    const container = document.getElementById('custom-ingredients-container');
+    const index = container.children.length;
+
+    const firstSelect = container.querySelector('select');
+    const optionsHtml = firstSelect ? firstSelect.innerHTML : '<option value="">Select an ingredient</option>';
+
+    const html = `
+      <div class="form-group" style="display: flex; flex-direction: column; margin-bottom: 15px;">
+        <label for="user_meal_user_meal_ingredients_attributes_${index}_ingredient_id" class="form-label" style="margin-top: 1rem;">Ingredient*</label>
+        <select 
+          name="user_meal[user_meal_ingredients_attributes][${index}][ingredient_id]" 
+          id="user_meal_user_meal_ingredients_attributes_${index}_ingredient_id" 
+          class="form-control"
+          required
+        >
+          ${optionsHtml}
+        </select>
+
+        <label for="user_meal_user_meal_ingredients_attributes_${index}_quantity" class="form-label" style="margin-top: 1rem;">Quantity*</label>
+        <input 
+          type="text" 
+          name="user_meal[user_meal_ingredients_attributes][${index}][quantity]" 
+          id="user_meal_user_meal_ingredients_attributes_${index}_quantity" 
+          placeholder="e.g., 1" 
+          min="1" 
+          required
+          class="form-control"
+        >
+
+        <span style="display: flex; margin-top: 0.5rem; align-items: center;">
+          <small class="text-muted">Quantity of each ingredient</small>
+          <button type="button" onclick="removeIngredient(this)" class="btn btn-sm btn-danger" style="margin-left: auto;">Remove</button>
+        </span>
+      </div>
+    `;
+
+    container.insertAdjacentHTML('beforeend', html);
+  }
+
+  function removeIngredient(button) {
+    const row = button.closest('.form-group'); // find the ancestor div
+    if (row) {
+      row.remove();
+    }
+  }
+</script>

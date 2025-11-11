@@ -2,25 +2,25 @@
 
 :root {
   /* Fresh Fruit Color Palette */
-  --primary: #FF6B6B;        /* Tomato Red */
-  --secondary: #4ECDC4;      /* Mint Green */
-  --accent: #FFE66D;         /* Banana Yellow */
-  --success: #95E1D3;        /* Lime Green */
-  --warning: #FFA07A;        /* Orange */
-  --danger: #E63946;         /* Cherry Red */
-  
+  --primary: #ff6b6b; /* Tomato Red */
+  --secondary: #4ecdc4; /* Mint Green */
+  --accent: #ffe66d; /* Banana Yellow */
+  --success: #95e1d3; /* Lime Green */
+  --warning: #ffa07a; /* Orange */
+  --danger: #e63946; /* Cherry Red */
+
   /* Neutral Colors */
-  --bg-cream: #FFFEF9;       /* Cream background */
-  --bg-light: #F7FFF7;       /* Light mint background */
-  --text-dark: #2C3E50;      /* Dark text */
-  --text-muted: #7F8C8D;     /* Muted text */
-  --border: #E8F5E9;         /* Light border */
-  
+  --bg-cream: #fffef9; /* Cream background */
+  --bg-light: #f7fff7; /* Light mint background */
+  --text-dark: #2c3e50; /* Dark text */
+  --text-muted: #7f8c8d; /* Muted text */
+  --border: #e8f5e9; /* Light border */
+
   /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
-  --shadow-lg: 0 10px 20px rgba(0,0,0,0.1);
-  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.1);
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -35,7 +35,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-light) 100%);
   color: var(--text-dark);
   line-height: 1.6;
@@ -163,31 +163,31 @@ h3 {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary) 0%, #FF8E8E 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #ff8e8e 100%);
   color: white;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #FF8E8E 0%, var(--primary) 100%);
+  background: linear-gradient(135deg, #ff8e8e 0%, var(--primary) 100%);
 }
 
 .btn-secondary {
-  background: linear-gradient(135deg, var(--secondary) 0%, #6EDED6 100%);
+  background: linear-gradient(135deg, var(--secondary) 0%, #6eded6 100%);
   color: white;
 }
 
 .btn-success {
-  background: linear-gradient(135deg, var(--success) 0%, #B0F0E4 100%);
+  background: linear-gradient(135deg, var(--success) 0%, #b0f0e4 100%);
   color: var(--text-dark);
 }
 
 .btn-warning {
-  background: linear-gradient(135deg, var(--warning) 0%, #FFB89C 100%);
+  background: linear-gradient(135deg, var(--warning) 0%, #ffb89c 100%);
   color: white;
 }
 
 .btn-danger {
-  background: linear-gradient(135deg, var(--danger) 0%, #F05454 100%);
+  background: linear-gradient(135deg, var(--danger) 0%, #f05454 100%);
   color: white;
 }
 
@@ -243,7 +243,7 @@ table {
 }
 
 thead {
-  background: linear-gradient(135deg, var(--accent) 0%, #FFED8F 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #ffed8f 100%);
 }
 
 th {
@@ -298,13 +298,18 @@ tbody tr:last-child td {
 }
 
 .feature-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 5px;
-  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  background: linear-gradient(
+    90deg,
+    var(--primary),
+    var(--secondary),
+    var(--accent)
+  );
 }
 
 .feature-card:hover {
@@ -380,8 +385,12 @@ tbody tr:last-child td {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive */
@@ -390,34 +399,66 @@ tbody tr:last-child td {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .navbar-menu {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
+
   .feature-grid {
     grid-template-columns: 1fr;
   }
-  
+
   h1 {
     font-size: 2rem;
   }
-  
+
   h2 {
     font-size: 1.5rem;
   }
 }
 
+/* Error Messages */
+.field_with_errors input {
+  border-color: var(--danger) !important;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1) !important;
+}
+
+.field_with_errors label {
+  color: var(--danger);
+}
+
 /* Utility Classes */
-.text-center { text-align: center; }
-.text-muted { color: var(--text-muted); }
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.p-1 { padding: 0.5rem; }
-.p-2 { padding: 1rem; }
-.p-3 { padding: 1.5rem; }
+.text-center {
+  text-align: center;
+}
+.text-muted {
+  color: var(--text-muted);
+}
+.mt-1 {
+  margin-top: 0.5rem;
+}
+.mt-2 {
+  margin-top: 1rem;
+}
+.mt-3 {
+  margin-top: 1.5rem;
+}
+.mb-1 {
+  margin-bottom: 0.5rem;
+}
+.mb-2 {
+  margin-bottom: 1rem;
+}
+.mb-3 {
+  margin-bottom: 1.5rem;
+}
+.p-1 {
+  padding: 0.5rem;
+}
+.p-2 {
+  padding: 1rem;
+}
+.p-3 {
+  padding: 1.5rem;
+}
