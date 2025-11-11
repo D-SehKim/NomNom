@@ -1,0 +1,61 @@
+<% content_for :title, 'Budget Tracker - NomNom' %>
+
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+      <h1 style="margin: 0;">💸 Budget Tracker</h1>
+      <p class="text-muted" style="margin: 0;">Total spent: <strong id="budget-total"><%= number_to_currency(@total_spent) %></strong></p>
+    </div>
+    <%= link_to '➕ Add Budget Entry', new_budget_item_path, class: 'btn btn-primary' %>
+  </div>
+
+  <% if @budget_items.any? %>
+    <table data-testid="budget-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th style="width: 140px;">Amount</th>
+          <th>Notes</th>
+          <th style="text-align: center;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @budget_items.each do |item| %>
+          <tr>
+            <td><strong><%= item.name %></strong></td>
+            <td><span class="badge badge-amount"><%= number_to_currency(item.amount) %></span></td>
+            <td><%= item.notes.present? ? item.notes : '-' %></td>
+            <td style="text-align: center;">
+              <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <%= link_to 'Edit', edit_budget_item_path(item), class: 'btn btn-sm btn-secondary' %>
+                <%= button_to 'Delete', budget_item_path(item), method: :delete, data: { confirm: 'Remove this entry?' }, class: 'btn btn-sm btn-danger' %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty-state" style="padding: 4rem 2rem;">
+      <div class="empty-state-icon">💼</div>
+      <h2 style="color: var(--text-muted);">No spending logged yet</h2>
+      <p style="font-size: 1.1rem; margin: 1rem 0 2rem 0;">Track your first purchase to monitor your grocery budget.</p>
+      <%= link_to 'Add Budget Entry', new_budget_item_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;">
+  <%= link_to '← Back to Home', root_path, class: 'btn btn-secondary' %>
+</div>
+
+<style>
+  .badge-amount {
+    background: linear-gradient(135deg, #ffe66d 0%, #ffed8f 100%);
+    color: var(--text-dark);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    display: inline-block;
+  }
+</style>
