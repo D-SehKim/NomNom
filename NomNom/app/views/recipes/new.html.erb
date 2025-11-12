@@ -1,0 +1,50 @@
+<h1>New Recipe</h1>
+
+<%= form_with(model: @recipe, local: true) do |f| %>
+  <% if @recipe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+      <ul>
+        <% @recipe.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <h3>Ingredients</h3>
+  <div id="recipe_ingredients">
+    <%= f.fields_for :recipe_ingredients do |ri_fields| %>
+      <div class="nested-fields">
+        <%= ri_fields.label :ingredient_id, "Ingredient" %>
+        <%= ri_fields.collection_select :ingredient_id, @ingredients, :id, :name, include_blank: true %>
+
+        <%= ri_fields.label :quantity %>
+        <%= ri_fields.number_field :quantity, step: 1 %>
+
+        <%= ri_fields.fields_for :ingredient do |ing_fields| %>
+          <div class="nested-ingredient">
+            <%= ing_fields.label :name, "New ingredient name (optional)" %>
+            <%= ing_fields.text_field :name %>
+            <%= ing_fields.label :calories_per_unit, "Calories per unit" %>
+            <%= ing_fields.number_field :calories_per_unit, step: 0.1 %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

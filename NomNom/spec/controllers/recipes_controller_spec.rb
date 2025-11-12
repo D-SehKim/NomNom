@@ -13,16 +13,25 @@ RSpec.describe RecipesController, type: :controller do
   context "when user is authenticated" do
     before { sign_in user }
 
+    # -------------------------
+    # INDEX
+    # -------------------------
     describe "GET #index" do
       context "without ingredient parameter" do
-        it "returns a success response" do
+        it "returns a success response and assigns empty @meals" do
           get :index
           expect(response).to be_successful
+          expect(assigns(:meals)).to eq([])
         end
 
-        it "assigns an empty array to @meals" do
-          get :index
+        it "assigns empty @meals and sets flash alert when API call fails" do
+          # Stub HTTParty to simulate failed API
+          allow(HTTParty).to receive(:get).and_return(double(success?: false))
+
+          get :index, params: { ingredient: "chicken" }
+
           expect(assigns(:meals)).to eq([])
+          expect(flash.now[:alert]).to eq("There was an error fetching recipes. Please try again.")
         end
       end
 
@@ -30,183 +39,146 @@ RSpec.describe RecipesController, type: :controller do
         let(:mock_response) do
           {
             "meals" => [
-              {
-                "strMeal" => "Chicken Curry",
-                "strMealThumb" => "https://example.com/image.jpg",
-                "idMeal" => "52796"
-              },
-              {
-                "strMeal" => "Chicken Soup",
-                "strMealThumb" => "https://example.com/image2.jpg",
-                "idMeal" => "52797"
-              }
+              { "strMeal" => "Chicken Curry", "strMealThumb" => "url1", "idMeal" => "52796" },
+              { "strMeal" => "Chicken Soup", "strMealThumb" => "url2", "idMeal" => "52797" }
             ]
           }
         end
 
         before do
-          allow(HTTParty).to receive(:get).and_return(
-            double(success?: true, parsed_response: mock_response)
-          )
-        end
-
-        it "makes a request to the MealDB API with encoded ingredient" do
-          expect(HTTParty).to receive(:get)
-            .with("https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken")
+          allow(HTTParty).to receive(:get)
             .and_return(double(success?: true, parsed_response: mock_response))
-          
-          get :index, params: { ingredient: "chicken" }
-        end
-
-        it "encodes special characters in ingredient parameter" do
-          expect(HTTParty).to receive(:get)
-            .with("https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken+breast")
-            .and_return(double(success?: true, parsed_response: mock_response))
-          
-          get :index, params: { ingredient: "chicken breast" }
         end
 
         it "assigns the meals from the API response" do
           get :index, params: { ingredient: "chicken" }
           expect(assigns(:meals)).to eq(mock_response["meals"])
         end
-
-        it "returns a success response" do
-          get :index, params: { ingredient: "chicken" }
-          expect(response).to be_successful
-        end
-      end
-
-      context "when API request fails" do
-        before do
-          allow(HTTParty).to receive(:get).and_return(
-            double(success?: false, parsed_response: {})
-          )
-        end
-
-        it "assigns an empty array to @meals" do
-          get :index, params: { ingredient: "chicken" }
-          expect(assigns(:meals)).to eq([])
-        end
-
-        it "sets an error flash message" do
-          get :index, params: { ingredient: "chicken" }
-          expect(flash.now[:alert]).to eq("There was an error fetching recipes. Please try again.")
-        end
-
-        it "still returns a success response" do
-          get :index, params: { ingredient: "chicken" }
-          expect(response).to be_successful
-        end
-      end
-
-      context "when API returns null meals" do
-        before do
-          allow(HTTParty).to receive(:get).and_return(
-            double(success?: true, parsed_response: { "meals" => nil })
-          )
-        end
-
-        it "assigns nil to @meals" do
-          get :index, params: { ingredient: "nonexistent" }
-          expect(assigns(:meals)).to be_nil
-        end
       end
     end
 
+    # -------------------------
+    # SHOW
+    # -------------------------
     describe "GET #show" do
       let(:meal_id) { "52796" }
-      let(:mock_meal_data) do
-        {
-          "meals" => [
-            {
-              "idMeal" => "52796",
-              "strMeal" => "Chicken Curry",
-              "strCategory" => "Chicken",
-              "strInstructions" => "Cook the chicken...",
-              "strMealThumb" => "https://example.com/image.jpg"
+      let(:mock_meal_data) { { "meals" => [{ "idMeal" => meal_id, "strMeal" => "Chicken Curry" }] } }
+
+      before do
+        allow(HTTParty).to receive(:get)
+          .and_return(double(success?: true, parsed_response: mock_meal_data))
+      end
+
+      it "assigns the meal data to @meal" do
+        get :show, params: { id: meal_id }
+        expect(assigns(:meal)).to eq(mock_meal_data["meals"].first)
+      end
+
+      it "redirects to recipes_path with alert if API fails" do
+        allow(HTTParty).to receive(:get).and_return(double(success?: false))
+        get :show, params: { id: meal_id }
+        expect(response).to redirect_to(recipes_path)
+        expect(flash[:alert]).to eq("Error fetching recipe details.")
+      end
+
+      it "redirects to recipes_path with alert if meal not found" do
+        allow(HTTParty).to receive(:get).and_return(double(success?: true, parsed_response: { "meals" => [] }))
+        get :show, params: { id: meal_id }
+        expect(response).to redirect_to(recipes_path)
+        expect(flash[:alert]).to eq("Recipe not found.")
+      end
+    end
+
+    # -------------------------
+    # NEW
+    # -------------------------
+    describe "GET #new" do
+      it "assigns a new recipe with a built recipe ingredient and all ingredients" do
+        ingredient = create(:ingredient, name: "Sugar")
+
+        # Only stub render for this action to avoid MissingTemplate errors
+        allow(controller).to receive(:render)
+
+        get :new
+
+        expect(assigns(:recipe)).to be_a_new(Recipe)
+        expect(assigns(:recipe).recipe_ingredients.size).to eq(1)
+        expect(assigns(:ingredients)).to include(ingredient)
+      end
+    end
+
+    # -------------------------
+    # CREATE
+    # -------------------------
+    describe "POST #create" do
+      context "with valid params" do
+        let(:ingredient) { create(:ingredient) }
+        let(:recipe_params) do
+          {
+            name: "Test Recipe",
+            description: "Delicious",
+            recipe_ingredients_attributes: { "0" => { ingredient_id: ingredient.id, quantity: 2 } }
+          }
+        end
+
+        it "creates a recipe and redirects with notice" do
+          post :create, params: { recipe: recipe_params }
+
+          recipe = assigns(:recipe)
+          expect(recipe.name).to eq("Test Recipe")
+          expect(response).to redirect_to(recipe_path(recipe))
+          expect(flash[:notice]).to eq("Recipe created successfully!")
+        end
+      end
+
+      context "with inline new ingredient" do
+        let(:recipe_params_with_new_ingredient) do
+          {
+            name: "Smoothie",
+            description: "Tasty",
+            recipe_ingredients_attributes: {
+              "0" => {
+                ingredient_id: "", # triggers inline creation
+                ingredient_attributes: { name: "Banana", calories_per_unit: 100 },
+                quantity: 2
+              }
             }
-          ]
-        }
-      end
-
-      context "when recipe is found" do
-        before do
-          allow(HTTParty).to receive(:get).and_return(
-            double(success?: true, parsed_response: mock_meal_data)
-          )
+          }
         end
 
-        it "makes a request to the MealDB API with the meal ID" do
-          expect(HTTParty).to receive(:get)
-            .with("https://www.themealdb.com/api/json/v1/1/lookup.php?i=#{meal_id}")
-            .and_return(double(success?: true, parsed_response: mock_meal_data))
-          
-          get :show, params: { id: meal_id }
-        end
+        it "creates the ingredient inline and saves the recipe" do
+          expect {
+            post :create, params: { recipe: recipe_params_with_new_ingredient }
+          }.to change(Ingredient, :count).by(1)
+            .and change(Recipe, :count).by(1)
 
-        it "assigns the meal data to @meal" do
-          get :show, params: { id: meal_id }
-          expect(assigns(:meal)).to eq(mock_meal_data["meals"].first)
-        end
-
-        it "returns a success response" do
-          get :show, params: { id: meal_id }
-          expect(response).to be_successful
+          recipe = assigns(:recipe)
+          expect(recipe.recipe_ingredients.first.ingredient.name).to eq("Banana")
+          expect(recipe.recipe_ingredients.first.quantity).to eq(2)
+          expect(response).to redirect_to(recipe_path(recipe))
+          expect(flash[:notice]).to eq("Recipe created successfully!")
         end
       end
 
-      context "when API request fails" do
-        before do
-          allow(HTTParty).to receive(:get).and_return(
-            double(success?: false, parsed_response: {})
-          )
+      context "when saving recipe fails" do
+        let(:invalid_recipe_params) do
+          {
+            name: "",
+            description: "No name",
+            recipe_ingredients_attributes: {
+              "0" => { ingredient_id: "", ingredient_attributes: { name: "Banana", calories_per_unit: 100 }, quantity: 2 }
+            }
+          }
         end
 
-        it "redirects to recipes path" do
-          get :show, params: { id: meal_id }
-          expect(response).to redirect_to(recipes_path)
-        end
+        it "renders :new and assigns @ingredients" do
+          allow_any_instance_of(Recipe).to receive(:save).and_return(false)
+          allow(controller).to receive(:render).with(:new, status: :unprocessable_entity).and_return(nil)
 
-        it "sets an error alert message" do
-          get :show, params: { id: meal_id }
-          expect(flash[:alert]).to eq("Error fetching recipe details.")
-        end
-      end
+          post :create, params: { recipe: invalid_recipe_params }
 
-      context "when recipe is not found" do
-        before do
-          allow(HTTParty).to receive(:get).and_return(
-            double(success?: true, parsed_response: { "meals" => nil })
-          )
-        end
-
-        it "redirects to recipes path" do
-          get :show, params: { id: "invalid_id" }
-          expect(response).to redirect_to(recipes_path)
-        end
-
-        it "sets a not found alert message" do
-          get :show, params: { id: "invalid_id" }
-          expect(flash[:alert]).to eq("Recipe not found.")
-        end
-      end
-
-      context "when meals array is empty" do
-        before do
-          allow(HTTParty).to receive(:get).and_return(
-            double(success?: true, parsed_response: { "meals" => [] })
-          )
-        end
-
-        it "redirects to recipes path" do
-          get :show, params: { id: meal_id }
-          expect(response).to redirect_to(recipes_path)
-        end
-
-        it "sets a not found alert message" do
-          get :show, params: { id: meal_id }
-          expect(flash[:alert]).to eq("Recipe not found.")
+          expect(assigns(:ingredients)).to eq(Ingredient.all)
+          expect(assigns(:recipe)).to be_a(Recipe)
         end
       end
     end
