@@ -109,9 +109,12 @@ end
 
 When("I remove the recipe {string}") do |recipe_name|
   visit user_meals_path
-  within(:xpath, "//h3[text()='Recipes']/following-sibling::div") do
-    within(:xpath, ".//h4[contains(text(), '#{recipe_name}')]/ancestor::div[contains(@style, 'border: 1px solid #aaa')]") do
-      click_button "Remove"
+  
+  # Target the "Recipes" section by <h2> heading
+  within(:xpath, "//h2[normalize-space()='Recipes']/following::table[1]") do
+    # Find the table row containing the recipe name
+    within(:xpath, ".//tr[td[contains(., '#{recipe_name}')]]") do
+      click_button "🗑️ Delete"  # or "Remove" if you changed the label in your ERB
     end
   end
 end
@@ -123,7 +126,7 @@ When("I remove the custom ingredient {string}") do |ingredient_name|
 
   container = find('div', text: /#{ingredient_name}/, match: :first, visible: true)
   within(container) do
-    click_button "Remove"
+    click_button "🗑️ Delete"
   end
 end
 
