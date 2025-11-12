@@ -102,7 +102,7 @@ The app will be available at `http://localhost:3000`
 git push heroku master
 ```
 
-The link is https://nomnom-app-040d7eb8feb7.herokuapp.com/
+The link is [https://nomnom-app-040d7eb8feb7.herokuapp.com/](https://nomnom-app-040d7eb8feb7.herokuapp.com/)
 
 ### Running tests
 
