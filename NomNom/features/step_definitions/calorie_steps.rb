@@ -85,10 +85,6 @@ When("I visit the new meal page") do
   visit new_user_meal_path
 end
 
-When("I select {string} from the meal type") do |choice|
-  select choice, from: "meal-choice"
-end
-
 When("I add the recipe {string} with {int} servings") do |recipe_name, servings|
   recipe = Recipe.find_or_create_by!(name: recipe_name)
 
@@ -132,6 +128,30 @@ When("I remove the custom ingredient {string}") do |ingredient_name|
   within(container) do
     click_button "🗑️ Delete"
   end
+end
+
+When("I fill in the new recipe name with {string}") do |name|
+  fill_in "new_recipe[name]", with: name
+end
+
+When("I fill in the new recipe description with {string}") do |desc|
+  fill_in "new_recipe[description]", with: desc
+end
+
+When("I add {string} with quantity {int} to the recipe") do |ingredient_name, quantity|
+  select ingredient_name, from: "new_recipe[recipe_ingredients_attributes][0][ingredient_id]"
+  fill_in "new_recipe[recipe_ingredients_attributes][0][quantity]", with: quantity
+end
+
+When("I add a new ingredient {string} with {int} calories per unit and quantity {int}") do |name, calories, quantity|
+  select "new", from: "new_recipe[recipe_ingredients_attributes][0][ingredient_id]"
+  fill_in "new_recipe[recipe_ingredients_attributes][0][ingredient_attributes][name]", with: name
+  fill_in "new_recipe[recipe_ingredients_attributes][0][ingredient_attributes][calories_per_unit]", with: calories
+  fill_in "new_recipe[recipe_ingredients_attributes][0][quantity]", with: quantity
+end
+
+When("I submit the new recipe") do
+  click_button "Save Meal"
 end
 
 Then("I should see {string} listed") do |name|

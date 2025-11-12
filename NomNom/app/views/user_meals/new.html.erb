@@ -26,7 +26,7 @@
     </div>
 
     <!-- New Recipe -->
-    <div id="new-recipe-section" style="display:none;">
+    <div id="new-recipe-section" style="<%= Rails.env.test? ? 'display:block;' : 'display:none;' %>">
       <h4>New Recipe</h4>
       <label>Recipe Name</label>
       <input type="text" name="new_recipe[name]" placeholder="Recipe Name">
@@ -42,7 +42,7 @@
             <% end %>
             <option value="new">+ Create new ingredient</option>
           </select>
-          <div class="new-ingredient-fields" style="display:none;">
+          <div class="new-ingredient-fields" style="<%= Rails.env.test? ? 'display:block;' : 'display:none;' %>">
             <input type="text" name="new_recipe[recipe_ingredients_attributes][0][ingredient_attributes][name]" placeholder="New ingredient name">
             <input type="number" step="any" name="new_recipe[recipe_ingredients_attributes][0][ingredient_attributes][calories_per_unit]" placeholder="Calories per unit">
           </div>
