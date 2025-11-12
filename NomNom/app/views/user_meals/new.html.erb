@@ -1,152 +1,151 @@
 <% content_for :title, "Log a new meal" %>
 
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
 <div class="card" style="max-width: 600px; margin: 2rem auto;">
-  <h1 style="text-align: center; margin-bottom: 0.5rem;">Log a New Meal</h1>
-  <p class="text-center text-muted" style="margin-bottom: 2rem;">What did you eat today?</p>
+  <h1 class="text-center mb-2">Log a New Meal</h1>
+  <p class="text-center text-muted mb-4">What did you eat today?</p>
 
   <%= form_with(model: @user_meal, local: true) do |f| %>
+    <!-- Meal Type Selector -->
     <div>
-      <%= f.label :choice, "Would you like to use a recipe or add ingredients?" %><br>
+      <label>Meal Type</label>
       <select id="meal-choice" onchange="toggleMealForm()">
         <option value="">Select an option</option>
         <option value="recipe">Use Recipe</option>
         <option value="custom">Add Ingredients</option>
+        <option value="new_recipe">Add New Recipe</option>
       </select>
     </div>
 
-    <!-- Recipe Section -->
-    <div id="recipe-section" style="display: none; margin-top: 15px;">
-      <h3>Choose a Recipe</h3>
-      <div style="margin-bottom: 10px;">
-        <%= f.collection_select :recipe_id, @recipes, :id, :name, prompt: "Select a recipe" %>
-        <div class="form-group">
-          <%= f.label :servings, "Servings*" %>
-          <%= f.text_field :servings, placeholder: "e.g., 1", required: true %>
-          <small class="text-muted">How many servings did you have?</small>
-        </div>
-      </div>
+    <!-- Existing Recipe -->
+    <div id="recipe-section" style="display:none;">
+      <%= f.collection_select :recipe_id, @recipes, :id, :name, prompt: "Select a recipe" %>
     </div>
 
-    <!-- Custom Ingredients Section -->
-    <div id="ingredients-section" style="display: none; margin-top: 15px;">
-      <h3>Add Custom Ingredients</h3>
+    <!-- New Recipe -->
+    <div id="new-recipe-section" style="display:none;">
+      <h4>New Recipe</h4>
+      <label>Recipe Name</label>
+      <input type="text" name="new_recipe[name]" placeholder="Recipe Name">
+      <label>Description</label>
+      <textarea name="new_recipe[description]" placeholder="Description"></textarea>
+
+      <div id="new-recipe-ingredients-container">
+        <div class="recipe-ingredient-row">
+          <select name="new_recipe[recipe_ingredients_attributes][0][ingredient_id]" onchange="toggleNewIngredientFields(this)">
+            <option value="">Select existing ingredient</option>
+            <% @ingredients.each do |ing| %>
+              <option value="<%= ing.id %>"><%= ing.name %></option>
+            <% end %>
+            <option value="new">+ Create new ingredient</option>
+          </select>
+          <div class="new-ingredient-fields" style="display:none;">
+            <input type="text" name="new_recipe[recipe_ingredients_attributes][0][ingredient_attributes][name]" placeholder="New ingredient name">
+            <input type="number" step="any" name="new_recipe[recipe_ingredients_attributes][0][ingredient_attributes][calories_per_unit]" placeholder="Calories per unit">
+          </div>
+          <input type="number" name="new_recipe[recipe_ingredients_attributes][0][quantity]" placeholder="Quantity">
+          <button type="button" onclick="removeIngredient(this)">Remove</button>
+        </div>
+      </div>
+      <button type="button" onclick="addRecipeIngredient()">Add Recipe Ingredient</button>
+    </div>
+
+    <!-- Custom Ingredients -->
+    <div id="ingredients-section" style="display:none;">
+      <h4>Custom Ingredients</h4>
       <div id="custom-ingredients-container">
         <%= f.fields_for :user_meal_ingredients do |umi_form| %>
-          <div class="form-group" style="display: flex; flex-direction: column; margin-bottom: 15px;">
-            <%= umi_form.label :ingredient_id, "Ingredient*", class: "form-label", style: "margin-top: 1rem;" %>
-            <%= umi_form.collection_select :ingredient_id, @ingredients, :id, :name, prompt: "Select an ingredient", class: "form-control" %>
-            <%= umi_form.label :quantity, "Quantity*", class: "form-label", style: "margin-top: 1rem;" %>
-            <%= umi_form.text_field :quantity, placeholder: "e.g., 1", min: 1, required: true, class: "form-control" %>
-            <span style="display: flex; margin-top: 0.5rem;">
-              <small class="text-muted">Quantity of each ingredient</small>
-              <button type="button" onclick="removeIngredient(this)" class="btn btn-sm btn-danger" style="margin-left: auto;">Remove</button>
-            </span>
+          <div class="ingredient-row">
+            <%= umi_form.collection_select :ingredient_id, @ingredients, :id, :name, prompt: "Select ingredient" %>
+            <%= umi_form.number_field :quantity, placeholder: "Quantity" %>
+            <button type="button" onclick="removeIngredient(this)">Remove</button>
           </div>
         <% end %>
       </div>
-
-      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-        <button 
-          type="button" 
-          onclick="addCustomIngredient()" 
-          class="btn btn-secondary" 
-          style="flex: 1;"
-        >
-          ➕ Add Another Ingredient
-        </button>
-      </div>
+      <button type="button" onclick="addCustomIngredient()">Add Ingredient</button>
     </div>
 
-    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-      <%= f.submit "Save Meal", class: "btn btn-primary", style: "flex: 1;" %>
-      <%= link_to "Cancel", user_meals_path, class: "btn btn-secondary" %>
+    <!-- Single Servings Input (shown only for recipe/new recipe) -->
+    <div id="servings-field" style="display:none;" class="mt-3">
+      <%= f.label :servings, "Servings" %>
+      <%= f.number_field :servings, value: (@user_meal.servings || 1), min: 1, class: "form-control" %>
+      <small class="text-muted">How many servings?</small>
     </div>
+
+    <%= f.submit "Save Meal", class: "btn btn-primary mt-3" %>
   <% end %>
 </div>
 
-<style>
-  small {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 0.875rem;
-  }
-</style>
+<script id="ingredients-json" type="application/json">
+  <%= raw @ingredients.to_json %>
+</script>
 
 <script>
   function toggleMealForm() {
     const choice = document.getElementById('meal-choice').value;
-    const recipeSection = document.getElementById('recipe-section');
-    const ingredientsSection = document.getElementById('ingredients-section');
+    const sections = {
+      recipe: document.getElementById('recipe-section'),
+      custom: document.getElementById('ingredients-section'),
+      new_recipe: document.getElementById('new-recipe-section')
+    };
 
-    if (choice === "recipe") {
-      recipeSection.style.display = "block";
-      ingredientsSection.style.display = "none";
-      toggleInputs(recipeSection, true);
-      toggleInputs(ingredientsSection, false);
-    } else if (choice === "custom") {
-      recipeSection.style.display = "none";
-      ingredientsSection.style.display = "block";
-      toggleInputs(recipeSection, false);
-      toggleInputs(ingredientsSection, true);
+    Object.values(sections).forEach(sec => sec.style.display = "none");
+
+    if (choice === "recipe" || choice === "new_recipe") {
+      document.getElementById('servings-field').style.display = "block";
     } else {
-      recipeSection.style.display = "none";
-      ingredientsSection.style.display = "none";
-      toggleInputs(recipeSection, false);
-      toggleInputs(ingredientsSection, false);
+      document.getElementById('servings-field').style.display = "none";
     }
+
+    if (sections[choice]) sections[choice].style.display = "block";
   }
 
-  function toggleInputs(section, enable) {
-    const inputs = section.querySelectorAll("input, select, textarea");
-    inputs.forEach(input => {
-      input.disabled = !enable;
-    });
+  function removeIngredient(button) {
+    button.closest('.ingredient-row, .recipe-ingredient-row')?.remove();
   }
 
   function addCustomIngredient() {
     const container = document.getElementById('custom-ingredients-container');
     const index = container.children.length;
-
-    const firstSelect = container.querySelector('select');
-    const optionsHtml = firstSelect ? firstSelect.innerHTML : '<option value="">Select an ingredient</option>';
-
+    const ingredients = JSON.parse(document.getElementById('ingredients-json').textContent);
     const html = `
-      <div class="form-group" style="display: flex; flex-direction: column; margin-bottom: 15px;">
-        <label for="user_meal_user_meal_ingredients_attributes_${index}_ingredient_id" class="form-label" style="margin-top: 1rem;">Ingredient*</label>
-        <select 
-          name="user_meal[user_meal_ingredients_attributes][${index}][ingredient_id]" 
-          id="user_meal_user_meal_ingredients_attributes_${index}_ingredient_id" 
-          class="form-control"
-          required
-        >
-          ${optionsHtml}
+      <div class="ingredient-row">
+        <select name="user_meal[user_meal_ingredients_attributes][${index}][ingredient_id]">
+          <option value="">Select ingredient</option>
+          ${ingredients.map(i => `<option value="${i.id}">${i.name}</option>`).join('')}
         </select>
-
-        <label for="user_meal_user_meal_ingredients_attributes_${index}_quantity" class="form-label" style="margin-top: 1rem;">Quantity*</label>
-        <input 
-          type="text" 
-          name="user_meal[user_meal_ingredients_attributes][${index}][quantity]" 
-          id="user_meal_user_meal_ingredients_attributes_${index}_quantity" 
-          placeholder="e.g., 1" 
-          min="1" 
-          required
-          class="form-control"
-        >
-
-        <span style="display: flex; margin-top: 0.5rem; align-items: center;">
-          <small class="text-muted">Quantity of each ingredient</small>
-          <button type="button" onclick="removeIngredient(this)" class="btn btn-sm btn-danger" style="margin-left: auto;">Remove</button>
-        </span>
-      </div>
-    `;
-
+        <input type="number" name="user_meal[user_meal_ingredients_attributes][${index}][quantity]" placeholder="Quantity">
+        <button type="button" onclick="removeIngredient(this)">Remove</button>
+      </div>`;
     container.insertAdjacentHTML('beforeend', html);
   }
 
-  function removeIngredient(button) {
-    const row = button.closest('.form-group'); // find the ancestor div
-    if (row) {
-      row.remove();
-    }
+  function addRecipeIngredient() {
+    const container = document.getElementById('new-recipe-ingredients-container');
+    const index = container.querySelectorAll('.recipe-ingredient-row').length;
+    const ingredients = JSON.parse(document.getElementById('ingredients-json').textContent);
+    const html = `
+      <div class="recipe-ingredient-row">
+        <select name="new_recipe[recipe_ingredients_attributes][${index}][ingredient_id]" onchange="toggleNewIngredientFields(this)">
+          <option value="">Select existing ingredient</option>
+          ${ingredients.map(i => `<option value="${i.id}">${i.name}</option>`).join('')}
+          <option value="new">+ Create new ingredient</option>
+        </select>
+        <div class="new-ingredient-fields" style="display:none;">
+          <input type="text" name="new_recipe[recipe_ingredients_attributes][${index}][ingredient_attributes][name]" placeholder="New ingredient name">
+          <input type="number" step="any" name="new_recipe[recipe_ingredients_attributes][${index}][ingredient_attributes][calories_per_unit]" placeholder="Calories per unit">
+        </div>
+        <input type="number" name="new_recipe[recipe_ingredients_attributes][${index}][quantity]" placeholder="Quantity">
+        <button type="button" onclick="removeIngredient(this)">Remove</button>
+      </div>`;
+    container.insertAdjacentHTML('beforeend', html);
+  }
+
+  function toggleNewIngredientFields(select) {
+    const fields = select.parentElement.querySelector('.new-ingredient-fields');
+    fields.style.display = select.value === "new" ? "block" : "none";
   }
 </script>
