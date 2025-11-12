@@ -505,6 +505,7 @@ DEPENDENCIES
   capybara
   cucumber-rails
   database_cleaner
+  database_cleaner-active_record
   debug
   devise
   factory_bot_rails
@@ -524,7 +525,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-rails-omakase
   selenium-webdriver
-  shoulda-matchers (~> 6.0)
+  shoulda-matchers
   simplecov
   solid_cable
   solid_cache

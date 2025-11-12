@@ -4,7 +4,7 @@ Feature: Budget Tracker
   I want to log and manage how much I spend on each purchase
 
   Background:
-    Given I am logged in for budget tracking
+    Given I am logged in as a user
     And I visit the budget tracker page
 
   Scenario: Add a new budget entry

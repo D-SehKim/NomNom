@@ -28,14 +28,6 @@ When('I submit the budget form') do
   find('input[type="submit"]').click
 end
 
-When('I click {string}') do |text|
-  click_link_or_button(text)
-end
-
-Then('I should see {string}') do |text|
-  expect(page).to have_content(text)
-end
-
 Then('I should see {string} in the budget table') do |text|
   within('[data-testid="budget-table"]') do
     expect(page).to have_content(text)
