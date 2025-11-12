@@ -80,7 +80,8 @@ class UserMealsController < ApplicationController
 
   def clear_all
     current_user.user_meals.destroy_all
-    redirect_to user_meals_path, notice: "All meals cleared!"
+    flash[:notice] = "All meals and custom ingredients have been cleared!"
+    redirect_to user_meals_path
   end
 
   def destroy_ingredient
