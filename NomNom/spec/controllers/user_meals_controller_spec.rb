@@ -32,15 +32,130 @@ RSpec.describe UserMealsController, type: :controller do
   end
 
   describe "POST #create" do
-    context "with valid params" do
-      it "creates a meal and redirects" do
+    context "with valid existing recipe" do
+      it "creates a meal and redirects with notice" do
         expect {
-          post :create, params: { user_meal: { recipe_id: recipe.id, servings: 1 } }
+          post :create, params: { user_meal: { recipe_id: recipe.id, servings: 2 } }
         }.to change(UserMeal, :count).by(1)
+
         expect(response).to redirect_to(user_meals_path)
         expect(flash[:notice]).to eq("Meal added successfully!")
       end
     end
+
+    context "with new recipe creation" do
+      let(:new_recipe_params) do
+        {
+          name: "Protein Shake",
+          description: "A tasty shake",
+          recipe_ingredients_attributes: {
+            "0" => {
+              ingredient_attributes: { name: "Protein Powder", calories_per_unit: 120 },
+              quantity: 2
+            }
+          }
+        }
+      end
+
+      it "creates a new recipe and associates it with the meal" do
+        expect {
+          post :create, params: { user_meal: { servings: 1 }, new_recipe: new_recipe_params }
+        }.to change(Recipe, :count).by(1)
+          .and change(UserMeal, :count).by(1)
+
+        created_recipe = Recipe.last
+        expect(created_recipe.name).to eq("Protein Shake")
+        expect(created_recipe.recipe_ingredients.first.ingredient.name).to eq("Protein Powder")
+
+        expect(response).to redirect_to(user_meals_path)
+        expect(flash[:notice]).to eq("Meal added successfully!")
+      end
+    end
+
+    context "when new recipe fails to save" do
+      let(:valid_recipe_params) do
+        {
+          name: "Protein Shake",
+          description: "Tasty shake",
+          recipe_ingredients_attributes: {
+            "0" => {
+              ingredient_attributes: { name: "Protein Powder", calories_per_unit: 120 },
+              quantity: 2
+            }
+          }
+        }
+      end
+
+      it "renders :new with flash alert" do
+        # Stub Recipe#save to force failure
+        allow_any_instance_of(Recipe).to receive(:save).and_return(false)
+
+        post :create, params: { user_meal: { servings: 1 }, new_recipe: valid_recipe_params }
+
+        expect(response).to render_template(:new)
+        expect(flash.now[:alert]).to include("Error creating recipe")
+        expect(assigns(:recipes)).to eq(Recipe.all)
+        expect(assigns(:ingredients)).to eq(Ingredient.all)
+      end
+    end
+
+    context "when meal save fails" do
+      before do
+        # Provide a valid recipe to bypass "must select a recipe or add custom ingredients"
+        allow_any_instance_of(UserMeal).to receive(:save).and_return(false)
+      end
+
+      it "renders :new with flash alert" do
+        post :create, params: { user_meal: { recipe_id: recipe.id, servings: 1 } }
+
+        expect(response).to render_template(:new)
+        expect(flash.now[:alert]).to include("Error saving meal")
+        expect(assigns(:recipes)).to eq(Recipe.all)
+        expect(assigns(:ingredients)).to eq(Ingredient.all)
+      end
+    end
+
+    context "with no recipe or ingredients" do
+      it "renders :new with validation alert" do
+        post :create, params: { user_meal: { servings: 1 } }
+
+        expect(response).to render_template(:new)
+        expect(flash.now[:alert]).to eq("You must select a recipe or add custom ingredients")
+      end
+    end
+
+    context "when new recipe uses an existing ingredient by id" do
+      let!(:existing_ingredient) { create(:ingredient, name: "Banana", calories_per_unit: 100) }
+
+      let(:new_recipe_params_with_existing_ingredient) do
+        {
+          name: "Banana Smoothie",
+          description: "Smoothie with existing ingredient",
+          recipe_ingredients_attributes: {
+            "0" => {
+              ingredient_id: existing_ingredient.id, # <-- this will hit Ingredient.find_by(id: ...)
+              quantity: 2
+            }
+          }
+        }
+      end
+
+      it "builds the recipe ingredient using the existing ingredient" do
+        expect {
+          post :create, params: { user_meal: { servings: 1 }, new_recipe: new_recipe_params_with_existing_ingredient }
+        }.to change(Recipe, :count).by(1)
+          .and change(UserMeal, :count).by(1)
+
+        created_recipe = Recipe.last
+        ri = created_recipe.recipe_ingredients.first
+        expect(ri.ingredient).to eq(existing_ingredient)
+        expect(ri.quantity).to eq(2)
+
+        expect(response).to redirect_to(user_meals_path)
+        expect(flash[:notice]).to eq("Meal added successfully!")
+      end
+    end
+
   end
 
   describe "DELETE #clear_all" do
@@ -54,20 +169,6 @@ RSpec.describe UserMealsController, type: :controller do
       }.to change { user.user_meals.count }.to(0)
       expect(response).to redirect_to(user_meals_path)
       expect(flash[:notice]).to eq("All meals and custom ingredients have been cleared!")
-    end
-  end
-
-  describe "POST #create with invalid parameters" do
-    before do
-        sign_in user
-    end
-
-    it "renders :new with all recipes and ingredients assigned" do
-        post :create, params: { user_meal: { servings: 1, user_meal_ingredients_attributes: [] } }
-
-        expect(response).to render_template(:new)
-        expect(assigns(:recipes)).to eq(Recipe.all)
-        expect(assigns(:ingredients)).to eq(Ingredient.all)
     end
   end
 
