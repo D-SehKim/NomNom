@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :budget_items
   resources :grocery_items do
     member do
       patch :toggle_purchased

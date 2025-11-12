@@ -1,0 +1,41 @@
+<% content_for :title, 'Edit Budget Entry - NomNom' %>
+
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+  <h1 style="text-align: center; margin-bottom: 0.5rem;">✏️ Edit Budget Entry</h1>
+  <p class="text-center text-muted" style="margin-bottom: 2rem;">Update the details of this purchase.</p>
+
+  <%= form_with model: @budget_item, local: true do |f| %>
+    <% if @budget_item.errors.any? %>
+      <div class="alert alert-error">
+        <h3 style="margin-top: 0; font-size: 1.1rem;">
+          <%= pluralize(@budget_item.errors.count, 'error') %> prevented this entry from being saved:
+        </h3>
+        <ul style="margin-left: 1.5rem;">
+          <% @budget_item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :name, '🏷️ Item or Store Name*' %>
+      <%= f.text_field :name, required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :amount, '💵 Amount Spent*' %>
+      <%= f.number_field :amount, step: 0.01, min: 0, required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :notes, '📝 Notes (optional)' %>
+      <%= f.text_area :notes, rows: 3 %>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <%= f.submit 'Update Entry', class: 'btn btn-primary', style: 'flex: 1;' %>
+      <%= link_to 'Cancel', budget_items_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>

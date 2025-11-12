@@ -1,0 +1,52 @@
+<% content_for :title, 'Add Budget Entry - NomNom' %>
+
+<div class="card" style="max-width: 600px; margin: 2rem auto;">
+  <h1 style="text-align: center; margin-bottom: 0.5rem;">➕ Add Budget Entry</h1>
+  <p class="text-center text-muted" style="margin-bottom: 2rem;">Log how much you spent on a grocery item.</p>
+
+  <%= form_with model: @budget_item, local: true do |f| %>
+    <% if @budget_item.errors.any? %>
+      <div class="alert alert-error">
+        <h3 style="margin-top: 0; font-size: 1.1rem;">
+          <%= pluralize(@budget_item.errors.count, 'error') %> prevented this entry from being saved:
+        </h3>
+        <ul style="margin-left: 1.5rem;">
+          <% @budget_item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :name, '🏷️ Item or Store Name*' %>
+      <%= f.text_field :name, placeholder: "e.g., Trader Joe's - Produce", required: true, autofocus: true %>
+      <small class="text-muted">What did you purchase?</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :amount, '💵 Amount Spent*' %>
+      <%= f.number_field :amount, step: 0.01, min: 0, required: true, placeholder: 'e.g., 23.45' %>
+      <small class="text-muted">Use numbers only. We'll format it as currency for you.</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :notes, '📝 Notes (optional)' %>
+      <%= f.text_area :notes, rows: 3, placeholder: 'Any additional notes about this purchase...' %>
+      <small class="text-muted">Add store details or reminders.</small>
+    </div>
+
+    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+      <%= f.submit 'Add to Budget Tracker', class: 'btn btn-primary', style: 'flex: 1;' %>
+      <%= link_to 'Cancel', budget_items_path, class: 'btn btn-secondary' %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  small {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+  }
+</style>
