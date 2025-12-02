@@ -18,6 +18,12 @@ cafbda0ea4a2044535a6a44b676d805266e08502
 
 ---
 
+## Demo Video
+
+https://youtu.be/HF1t-csgQuo
+
+---
+
 ## Team 10
 
 - **Daniel Kim** - (dk3506)
