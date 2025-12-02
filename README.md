@@ -18,6 +18,12 @@ cafbda0ea4a2044535a6a44b676d805266e08502
 
 ---
 
+## Demo Commit Hash
+
+83d4e51d1bb8eacfcc575ae86feb2d4f8b3a4b18
+
+---
+
 ## Demo Video
 
 https://youtu.be/HF1t-csgQuo
