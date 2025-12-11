@@ -10,7 +10,7 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 The link is [https://nomnom-app-040d7eb8feb7.herokuapp.com/](https://nomnom-app-040d7eb8feb7.herokuapp.com/)
 
-(Please note that all accounts have been reset after Dec. 10 2025 due to some final touches we were adding.  We're sorry for any confusion or dismay this may have caused.)
+(Please note that all accounts have been reset after Dec. 10 2025 due to some final touches we were adding.  We're sorry for any confusion this may have caused.)
 
 ---
 
