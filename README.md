@@ -6,6 +6,14 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 ---
 
+## Heroku Link
+
+The link is [https://nomnom-app-040d7eb8feb7.herokuapp.com/](https://nomnom-app-040d7eb8feb7.herokuapp.com/)
+
+(Please note that all accounts have been reset after Dec. 10 2025 due to some final touches we were adding.  We're sorry for any confusion or dismay this may have caused.)
+
+---
+
 ## Project Iteration 1 Commit Hash
 
 cafbda0ea4a2044535a6a44b676d805266e08502
@@ -125,8 +133,6 @@ The app will be available at `http://localhost:3000`
 ```
 git push heroku master
 ```
-
-The link is [https://nomnom-app-040d7eb8feb7.herokuapp.com/](https://nomnom-app-040d7eb8feb7.herokuapp.com/)
 
 ### Running tests
 
