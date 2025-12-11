@@ -6,6 +6,15 @@ A Ruby on Rails web application for managing grocery shopping, tracking food exp
 
 ---
 
+## Team 10
+
+- **Daniel Kim** - (dk3506)
+- **Minsuk Kim** - (mk4434)
+- **Rebecca Zhao** - (rz2763)
+- **Eric Chen** - (yc4670)
+
+---
+
 ## Heroku Link
 
 The link is [https://nomnom-app-040d7eb8feb7.herokuapp.com/](https://nomnom-app-040d7eb8feb7.herokuapp.com/)
@@ -41,15 +50,6 @@ cafbda0ea4a2044535a6a44b676d805266e08502
 ## Demo Video
 
 https://youtu.be/6_TqZY7iVLo
-
----
-
-## Team 10
-
-- **Daniel Kim** - (dk3506)
-- **Minsuk Kim** - (mk4434)
-- **Rebecca Zhao** - (rz2763)
-- **Eric Chen** - (yc4670)
 
 ---
 
