@@ -56,10 +56,12 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     describe "DELETE #destroy" do
+      let(:item) { create(:item, user: user) }  # Add user: user here!
+  
       it "destroys the requested item" do
-        item_to_delete = create(:item)
+        item  # Creates the item before the test runs
         expect {
-          delete :destroy, params: { id: item_to_delete.id }
+          delete :destroy, params: { id: item.id }
         }.to change(Item, :count).by(-1)
       end
 

@@ -2,15 +2,15 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!  # Require login
 
   def index
-    @items = Item.order(created_at: :desc)
+    @items = current_user.items.order(created_at: :desc)
   end
 
   def new
-    @item = Item.new
+    @item = current_user.items.new
   end
 
   def destroy
-    @item = Item.find(params[:id])
+    @item = current_user.items.find(params[:id])
     @item.destroy
     redirect_to items_path, notice: "Item deleted successfully."
   end
