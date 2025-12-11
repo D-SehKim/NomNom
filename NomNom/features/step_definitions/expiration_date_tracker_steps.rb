@@ -22,6 +22,7 @@ end
 Given('I have the following food items:') do |table|
   table.hashes.each do |row|
     create(:item, 
+      user: @user,  # ADD THIS LINE
       name: row['name'], 
       expires_at: row['expiration_date']
     )
@@ -39,7 +40,7 @@ Then('I should not see {string} in my food tracker') do |food_name|
 end
 
 Given('I have a food item {string} with expiration date {string}') do |name, date|
-  create(:item, name: name, expires_at: date)
+  create(:item, user: @user, name: name, expires_at: date)  # ADD user: @user
 end
 
 Given('today is {string}') do |date|

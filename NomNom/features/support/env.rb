@@ -3,7 +3,17 @@
 # newer version of cucumber-rails. Consider adding your own code to a new file
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
-
+require 'simplecov'
+SimpleCov.start 'rails' do
+  command_name 'Cucumber'  # ADD THIS
+  
+  add_filter '/bin/'
+  add_filter '/db/'
+  add_filter '/spec/'
+  add_filter '/test/'
+  add_filter '/features/'
+  add_filter '/config/'
+end
 
 require 'cucumber/rails'
 
